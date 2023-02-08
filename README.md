@@ -10,7 +10,6 @@ For more information:
 ## ATTENTION
 
 Please:
-
 - **Do not use in production**
 - **Do not use a Ledger device with funds for development purposes.**
 - **Have a separate and marked device that is used ONLY for development and testing**
