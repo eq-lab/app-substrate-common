@@ -4,8 +4,8 @@ This project contains concept of the Substrate common app for Ledger hardware wa
 
 For more information: 
 - article about Substrate common app: __TODO__
-- demo of using this app to sign transactions on parachains: __TODO__
-- [How to build](docs/build.md)
+- [demo](https://github.com/equilibrium-eosdt/ledger-substrate-app-demo) of using this app to sign transactions on parachains
+- [how to build](docs/build.md)
 
 ## ATTENTION
 
