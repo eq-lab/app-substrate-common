@@ -64,6 +64,7 @@ const uint8_t GenesisHash_Acala[32] = {252, 65, 185, 189, 142, 248, 254, 83, 213
 const uint8_t GenesisHash_Karura[32] = {186, 245, 170, 190, 64, 100, 109, 17, 240, 238, 138, 187, 220, 100, 244, 164, 183, 103, 73, 37, 203, 160, 142, 74, 5, 255, 158, 190, 214, 226, 18, 107};
 const uint8_t GenesisHash_Bifrost_Polkadot[32] = {38, 46, 27, 42, 215, 40, 71, 95, 214, 254, 136, 230, 45, 52, 194, 0, 171, 230, 253, 105, 57, 49, 221, 173, 20, 64, 89, 177, 235, 136, 78, 91};
 const uint8_t GenesisHash_Bifrost_Kusama[32] = {159, 40, 198, 166, 142, 15, 201, 100, 110, 255, 100, 147, 86, 132, 246, 238, 238, 206, 82, 126, 55, 187, 225, 242, 19, 210, 44, 170, 29, 157, 107, 237};
+const uint8_t GenesisHash_Nodle[32] = {151, 218, 126, 222, 152, 215, 186, 212, 227, 107, 77, 115, 75, 96, 85, 66, 90, 59, 224, 54, 218, 42, 51, 46, 165, 167, 3, 118, 86, 66, 122, 33};
 
 
 static const char* getChainName(uint8_t* genesisHash) {
@@ -85,6 +86,8 @@ static const char* getChainName(uint8_t* genesisHash) {
         return STR_CH_Bifrost_Polkadot;
     } else if(!memcmp(genesisHash, GenesisHash_Bifrost_Kusama, 32)){
         return STR_CH_Bifrost_Kusama;
+    } else if(!memcmp(genesisHash, GenesisHash_Nodle, 32)){
+        return STR_CH_Nodle;
     }
     return NULL;
 }
