@@ -41,6 +41,8 @@ static const char* STR_CH_Acala = "Acala";
 static const char* STR_CH_Karura = "Karura";
 static const char* STR_CH_Bifrost_Polkadot = "Bifrost(DOT)";
 static const char* STR_CH_Bifrost_Kusama = "Bifrost(KSM)";
+static const char* STR_CH_Nodle = "Nodle";
+
 #ifdef __cplusplus
 }
 #endif
