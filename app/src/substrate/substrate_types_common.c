@@ -94,6 +94,7 @@ static const char* getChainName(uint8_t* genesisHash) {
         return STR_CH_Astar;
     } else if(!memcmp(genesisHash, GenesisHash_Shiden, 32)){
         return STR_CH_Shiden;
+    }
     return NULL;
 }
 
