@@ -65,7 +65,7 @@ const uint8_t GenesisHash_Karura[32] = {186, 245, 170, 190, 64, 100, 109, 17, 24
 const uint8_t GenesisHash_Bifrost_Polkadot[32] = {38, 46, 27, 42, 215, 40, 71, 95, 214, 254, 136, 230, 45, 52, 194, 0, 171, 230, 253, 105, 57, 49, 221, 173, 20, 64, 89, 177, 235, 136, 78, 91};
 const uint8_t GenesisHash_Bifrost_Kusama[32] = {159, 40, 198, 166, 142, 15, 201, 100, 110, 255, 100, 147, 86, 132, 246, 238, 238, 206, 82, 126, 55, 187, 225, 242, 19, 210, 44, 170, 29, 157, 107, 237};
 const uint8_t GenesisHash_Nodle[32] = {151, 218, 126, 222, 152, 215, 186, 212, 227, 107, 77, 115, 75, 96, 85, 66, 90, 59, 224, 54, 218, 42, 51, 46, 165, 167, 3, 118, 86, 66, 122, 33};
-
+const uint8_t GenesisHash_Mangata[32] = {0xd6, 0x11, 0xf2, 0x2d, 0x29, 0x1c, 0x5b, 0x7b, 0x69, 0xf1, 0xe1, 0x05, 0xcc, 0xa0, 0x33, 0x52, 0x98, 0x4c, 0x34, 0x4c, 0x44, 0x21, 0x97, 0x7e, 0xfa, 0xa4, 0xcb, 0xdd, 0x18, 0x34, 0xe2, 0xaa};
 
 static const char* getChainName(uint8_t* genesisHash) {
     if(!memcmp(genesisHash, GenesisHash_Polkadot, 32)){
@@ -88,6 +88,8 @@ static const char* getChainName(uint8_t* genesisHash) {
         return STR_CH_Bifrost_Kusama;
     } else if(!memcmp(genesisHash, GenesisHash_Nodle, 32)){
         return STR_CH_Nodle;
+    } else if(!memcmp(genesisHash, GenesisHash_Mangata, 32)){
+        return STR_CH_Mangata;
     }
     return NULL;
 }
