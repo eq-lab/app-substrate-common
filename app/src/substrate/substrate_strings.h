@@ -43,6 +43,8 @@ static const char* STR_CH_Bifrost_Polkadot = "Bifrost(DOT)";
 static const char* STR_CH_Bifrost_Kusama = "Bifrost(KSM)";
 static const char* STR_CH_Nodle = "Nodle";
 static const char* STR_CH_Zeitgeist = "Zeitgeist";
+static const char* STR_CH_Astar = "Astar";
+static const char* STR_CH_Shiden = "Shiden";
 
 #ifdef __cplusplus
 }
