@@ -66,6 +66,8 @@ const uint8_t GenesisHash_Bifrost_Polkadot[32] = {38, 46, 27, 42, 215, 40, 71, 9
 const uint8_t GenesisHash_Bifrost_Kusama[32] = {159, 40, 198, 166, 142, 15, 201, 100, 110, 255, 100, 147, 86, 132, 246, 238, 238, 206, 82, 126, 55, 187, 225, 242, 19, 210, 44, 170, 29, 157, 107, 237};
 const uint8_t GenesisHash_Nodle[32] = {151, 218, 126, 222, 152, 215, 186, 212, 227, 107, 77, 115, 75, 96, 85, 66, 90, 59, 224, 54, 218, 42, 51, 46, 165, 167, 3, 118, 86, 66, 122, 33};
 const uint8_t GenesisHash_Zeitgeist[32] = {27, 242, 162, 236, 180, 168, 104, 222, 102, 234, 134, 16, 242, 206, 124, 140, 67, 112, 101, 97, 182, 71, 96, 49, 49, 95, 102, 64, 254, 56, 224, 96};
+const uint8_t GenesisHash_Astar[32] = {158, 183, 108, 81, 132, 196, 171, 134, 121, 210, 213, 216, 25, 253, 249, 11, 156, 0, 20, 3, 233, 225, 125, 162, 225, 75, 109, 138, 236, 64, 41, 198};
+const uint8_t GenesisHash_Shiden[32] = {241, 207, 144, 34, 199, 235, 179, 75, 22, 45, 91, 94, 52, 231, 5, 165, 167, 64, 178, 208, 236, 193, 0, 159, 184, 144, 35, 230, 42, 72, 129, 8};
 
 static const char* getChainName(uint8_t* genesisHash) {
     if(!memcmp(genesisHash, GenesisHash_Polkadot, 32)){
@@ -90,6 +92,10 @@ static const char* getChainName(uint8_t* genesisHash) {
         return STR_CH_Nodle;
     } else if(!memcmp(genesisHash, GenesisHash_Zeitgeist, 32)){
         return STR_CH_Zeitgeist;
+    } else if(!memcmp(genesisHash, GenesisHash_Astar, 32)){
+        return STR_CH_Astar;
+    } else if(!memcmp(genesisHash, GenesisHash_Shiden, 32)){
+        return STR_CH_Shiden;
     }
     return NULL;
 }
