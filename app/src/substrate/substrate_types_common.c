@@ -69,6 +69,9 @@ const uint8_t GenesisHash_Zeitgeist[32] = {27, 242, 162, 236, 180, 168, 104, 222
 const uint8_t GenesisHash_Astar[32] = {158, 183, 108, 81, 132, 196, 171, 134, 121, 210, 213, 216, 25, 253, 249, 11, 156, 0, 20, 3, 233, 225, 125, 162, 225, 75, 109, 138, 236, 64, 41, 198};
 const uint8_t GenesisHash_Shiden[32] = {241, 207, 144, 34, 199, 235, 179, 75, 22, 45, 91, 94, 52, 231, 5, 165, 167, 64, 178, 208, 236, 193, 0, 159, 184, 144, 35, 230, 42, 72, 129, 8};
 const uint8_t GenesisHash_Mangata[32] = {0xd6, 0x11, 0xf2, 0x2d, 0x29, 0x1c, 0x5b, 0x7b, 0x69, 0xf1, 0xe1, 0x05, 0xcc, 0xa0, 0x33, 0x52, 0x98, 0x4c, 0x34, 0x4c, 0x44, 0x21, 0x97, 0x7e, 0xfa, 0xa4, 0xcb, 0xdd, 0x18, 0x34, 0xe2, 0xaa};
+const uint8_t GenesisHash_Hydradx[32] = {175, 220, 24, 143, 69, 199, 29, 172, 186, 160, 182, 46, 22, 169, 31, 114, 108, 123, 134, 153, 169, 116, 140, 223, 113, 84, 89, 222, 107, 127, 54, 109};
+const uint8_t GenesisHash_Basilisk[32] = {168, 92, 251, 155, 159, 212, 214, 34, 165, 178, 130, 137, 160, 35, 71, 175, 152, 125, 143, 115, 250, 49, 8, 69, 14, 43, 74, 17, 193, 206, 87, 85};
+
 
 static const char* getChainName(uint8_t* genesisHash) {
     if(!memcmp(genesisHash, GenesisHash_Polkadot, 32)){
@@ -99,6 +102,10 @@ static const char* getChainName(uint8_t* genesisHash) {
         return STR_CH_Shiden;
     } else if(!memcmp(genesisHash, GenesisHash_Mangata, 32)){
         return STR_CH_Mangata;
+    } else if(!memcmp(genesisHash, GenesisHash_Hydradx, 32)){
+        return STR_CH_Hydradx;
+    } else if(!memcmp(genesisHash, GenesisHash_Basilisk, 32)){
+        return STR_CH_Basilisk;
     }
     return NULL;
 }
