@@ -46,6 +46,8 @@ static const char* STR_CH_Zeitgeist = "Zeitgeist";
 static const char* STR_CH_Astar = "Astar";
 static const char* STR_CH_Shiden = "Shiden";
 static const char* STR_CH_Mangata = "MangataX";
+static const char* STR_CH_Hydradx = "HydraDX";
+static const char* STR_CH_Basilisk = "Basilisk";
 
 #ifdef __cplusplus
 }
