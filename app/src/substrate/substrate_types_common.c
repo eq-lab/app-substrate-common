@@ -88,6 +88,10 @@ static const char* getChainName(uint8_t* genesisHash) {
         return STR_CH_Equilibrium;
     } else if(!memcmp(genesisHash, GenesisHash_Genshiro, 32)){
         return STR_CH_Genshiro;
+    } else if(!memcmp(genesisHash, GenesisHash_Acala, 32)){
+        return STR_CH_Acala;
+    } else if(!memcmp(genesisHash, GenesisHash_Karura, 32)){
+        return STR_CH_Karura;
     } else if(!memcmp(genesisHash, GenesisHash_Bifrost_Polkadot, 32)){
         return STR_CH_Bifrost_Polkadot;
     } else if(!memcmp(genesisHash, GenesisHash_Bifrost_Kusama, 32)){
