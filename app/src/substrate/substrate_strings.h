@@ -48,6 +48,8 @@ static const char* STR_CH_Shiden = "Shiden";
 static const char* STR_CH_Mangata = "MangataX";
 static const char* STR_CH_Hydradx = "HydraDX";
 static const char* STR_CH_Basilisk = "Basilisk";
+static const char* STR_CH_Ajuna = "Ajuna";
+static const char* STR_CH_Bajun = "Bajun";
 
 #ifdef __cplusplus
 }
