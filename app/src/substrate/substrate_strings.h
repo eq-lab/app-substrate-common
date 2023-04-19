@@ -50,6 +50,8 @@ static const char* STR_CH_Hydradx = "HydraDX";
 static const char* STR_CH_Basilisk = "Basilisk";
 static const char* STR_CH_Ajuna = "Ajuna";
 static const char* STR_CH_Bajun = "Bajun";
+static const char* STR_CH_Manta = "Manta";
+static const char* STR_CH_Calamari = "Calamari";
 
 #ifdef __cplusplus
 }
