@@ -75,6 +75,7 @@ const uint8_t GenesisHash_Ajuna[32] = {227, 88, 235, 29, 17, 179, 18, 85, 162, 1
 const uint8_t GenesisHash_Bajun[32] = {53, 160, 107, 254, 194, 237, 240, 255, 75, 232, 154, 100, 40, 204, 217, 255, 91, 208, 22, 125, 97, 140, 90, 13, 67, 65, 249, 96, 10, 69, 141, 20};
 const uint8_t GenesisHash_Manta[32] = {243, 199, 173, 136, 246, 168, 15, 54, 108, 75, 226, 22, 105, 20, 17, 239, 6, 34, 232, 184, 9, 177, 4, 110, 162, 151, 239, 16, 96, 88, 212, 235};
 const uint8_t GenesisHash_Calamari[32] = {74, 200, 12, 153, 40, 152, 65, 221, 148, 110, 249, 39, 101, 191, 101, 154, 48, 125, 57, 24, 155, 60, 227, 116, 169, 43, 95, 4, 21, 238, 23, 161};
+const uint8_t GenesisHash_Bitgreen[32] = {193, 69, 151, 186, 236, 203, 35, 45, 102, 39, 112, 210, 213, 10, 232, 50, 202, 140, 49, 146, 105, 61, 43, 8, 20, 230, 67, 63, 40, 136, 221, 214};
 
 static const char* getChainName(uint8_t* genesisHash) {
     if(!memcmp(genesisHash, GenesisHash_Polkadot, 32)){
@@ -121,6 +122,8 @@ static const char* getChainName(uint8_t* genesisHash) {
         return STR_CH_Manta;
     } else if(!memcmp(genesisHash, GenesisHash_Calamari, 32)){
         return STR_CH_Calamari;
+    } else if(!memcmp(genesisHash, GenesisHash_Bitgreen, 32)){
+        return STR_CH_Bitgreen;
     }
     return NULL;
 }
