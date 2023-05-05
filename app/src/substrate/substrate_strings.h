@@ -55,6 +55,7 @@ static const char* STR_CH_Calamari = "Calamari";
 static const char* STR_CH_Bitgreen = "Bitgreen";
 static const char* STR_CH_Crust_Parachain = "Crust(DOT)";
 static const char* STR_CH_Crust_Shadow = "Crust(KSM)";
+static const char* STR_CH_OriginTrail_Parachain = "OriginTrail Parachain";
 
 #ifdef __cplusplus
 }
