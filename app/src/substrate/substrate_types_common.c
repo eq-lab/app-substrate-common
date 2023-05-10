@@ -79,6 +79,7 @@ const uint8_t GenesisHash_Bitgreen[32] = {193, 69, 151, 186, 236, 203, 35, 45, 1
 const uint8_t GenesisHash_Crust_Parachain[32] = {67, 25, 204, 73, 238, 121, 73, 91, 87, 161, 254, 196, 210, 189, 67, 245, 144, 82, 220, 198, 144, 39, 109, 229, 102, 194, 105, 29, 109, 244, 247, 184};
 const uint8_t GenesisHash_Crust_Shadow[32] = {212, 192, 192, 140, 164, 157, 199, 198, 128, 195, 218, 199, 26, 124, 7, 3, 229, 178, 34, 244, 182, 192, 63, 228, 197, 33, 155, 184, 242, 44, 24, 220};
 const uint8_t GenesisHash_OriginTrail_Parachain[32] = {231, 224, 150, 35, 36, 163, 184, 108, 131, 64, 77, 190, 164, 131, 242, 95, 181, 218, 180, 194, 36, 121, 28, 129, 183, 86, 207, 201, 72, 0, 97, 116};
+const uint8_t GenesisHash_Stafi[32] = {0x29, 0x0a, 0x41, 0x49, 0xf0, 0x9e, 0xa0, 0xe4, 0x02, 0xc7, 0x4c, 0x1c, 0x7e, 0x96, 0xae, 0x42, 0x39, 0x58, 0x85, 0x77, 0xfe, 0x78, 0x93, 0x2f, 0x94, 0xf5, 0x40, 0x4c, 0x68, 0x24, 0x3d, 0x80};
 
 static const char* getChainName(uint8_t* genesisHash) {
     if(!memcmp(genesisHash, GenesisHash_Polkadot, 32)){
@@ -133,6 +134,8 @@ static const char* getChainName(uint8_t* genesisHash) {
         return STR_CH_Crust_Shadow;
     } else if(!memcmp(genesisHash, GenesisHash_OriginTrail_Parachain, 32)){
         return STR_CH_OriginTrail_Parachain;
+    } else if(!memcmp(genesisHash, GenesisHash_Stafi, 32)){
+        return STR_CH_Stafi;
     }
     return NULL;
 }
