@@ -58,6 +58,8 @@ static const char* STR_CH_Crust_Shadow = "Crust(KSM)";
 static const char* STR_CH_OriginTrail_Parachain = "OriginTrail Parachain";
 static const char* STR_CH_Interlay = "Interlay";
 static const char* STR_CH_Kintsugi = "Kintsugi";
+static const char* STR_CH_Litentry = "Litentry";
+static const char* STR_CH_Litmus = "Litmus";
 
 #ifdef __cplusplus
 }
