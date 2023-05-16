@@ -83,6 +83,7 @@ const uint8_t GenesisHash_Interlay[32] = {191, 136, 239, 231, 14, 158, 14, 145, 
 const uint8_t GenesisHash_Kintsugi[32] = {154, 249, 166, 78, 110, 77, 168, 227, 7, 57, 1, 195, 255, 12, 196, 195, 170, 217, 86, 55, 134, 216, 157, 175, 106, 216, 32, 182, 225, 74, 11, 139};
 const uint8_t GenesisHash_Litentry[32] = {47, 200, 187, 110, 215, 192, 5, 27, 220, 244, 134, 108, 50, 46, 211, 43, 98, 118, 87, 39, 19, 96, 126, 50, 151, 204, 244, 17, 184, 241, 74, 169};
 const uint8_t GenesisHash_Litmus[32] = {218, 88, 49, 251, 200, 87, 14, 60, 99, 54, 208, 215, 43, 140, 8, 248, 115, 139, 238, 254, 200, 18, 223, 33, 239, 42, 252, 41, 130, 237, 224, 156};
+const uint8_t GenesisHash_Kapex[32] = {120, 56, 195, 199, 116, 232, 135, 192, 165, 59, 203, 169, 230, 79, 112, 35, 97, 161, 168, 82, 213, 85, 11, 134, 181, 140, 215, 56, 39, 250, 30, 30};
 
 static const char* getChainName(uint8_t* genesisHash) {
     if(!memcmp(genesisHash, GenesisHash_Polkadot, 32)){
@@ -145,6 +146,8 @@ static const char* getChainName(uint8_t* genesisHash) {
         return STR_CH_Litentry;
     } else if(!memcmp(genesisHash, GenesisHash_Litmus, 32)){
         return STR_CH_Litmus;
+    } else if(!memcmp(genesisHash, GenesisHash_Kapex, 32)){
+        return STR_CH_Kapex;
     }
     return NULL;
 }
