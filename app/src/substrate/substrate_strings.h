@@ -61,6 +61,8 @@ static const char* STR_CH_Kintsugi = "Kintsugi";
 static const char* STR_CH_Litentry = "Litentry";
 static const char* STR_CH_Litmus = "Litmus";
 static const char* STR_CH_Kapex = "Kapex";
+static const char* STR_CH_Centrifuge = "Centrifuge";
+static const char* STR_CH_Altair = "Altair";
 
 #ifdef __cplusplus
 }
