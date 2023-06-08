@@ -84,6 +84,8 @@ const uint8_t GenesisHash_Kintsugi[32] = {154, 249, 166, 78, 110, 77, 168, 227, 
 const uint8_t GenesisHash_Litentry[32] = {47, 200, 187, 110, 215, 192, 5, 27, 220, 244, 134, 108, 50, 46, 211, 43, 98, 118, 87, 39, 19, 96, 126, 50, 151, 204, 244, 17, 184, 241, 74, 169};
 const uint8_t GenesisHash_Litmus[32] = {218, 88, 49, 251, 200, 87, 14, 60, 99, 54, 208, 215, 43, 140, 8, 248, 115, 139, 238, 254, 200, 18, 223, 33, 239, 42, 252, 41, 130, 237, 224, 156};
 const uint8_t GenesisHash_Kapex[32] = {120, 56, 195, 199, 116, 232, 135, 192, 165, 59, 203, 169, 230, 79, 112, 35, 97, 161, 168, 82, 213, 85, 11, 134, 181, 140, 215, 56, 39, 250, 30, 30};
+const uint8_t GenesisHash_Centrifuge[32] = {179, 219, 65, 66, 23, 2, 223, 154, 127, 202, 198, 43, 83, 255, 234, 200, 95, 120, 83, 204, 78, 104, 158, 11, 147, 174, 179, 219, 24, 192, 157, 130};
+const uint8_t GenesisHash_Altair[32] = {170, 56, 118, 193, 220, 138, 26, 252, 194, 233, 166, 133, 164, 159, 247, 112, 76, 253, 54, 173, 140, 144, 191, 39, 2, 185, 209, 176, 12, 196, 0, 17};
 
 static const char* getChainName(uint8_t* genesisHash) {
     if(!memcmp(genesisHash, GenesisHash_Polkadot, 32)){
@@ -148,6 +150,10 @@ static const char* getChainName(uint8_t* genesisHash) {
         return STR_CH_Litmus;
     } else if(!memcmp(genesisHash, GenesisHash_Kapex, 32)){
         return STR_CH_Kapex;
+    } else if(!memcmp(genesisHash, GenesisHash_Centrifuge, 32)){
+        return STR_CH_Centrifuge;
+    } else if(!memcmp(genesisHash, GenesisHash_Altair, 32)){
+        return STR_CH_Altair;
     }
     return NULL;
 }
