@@ -18,7 +18,7 @@
 use curve25519_dalek::constants::RISTRETTO_BASEPOINT_POINT;
 use curve25519_dalek::scalar::Scalar;
 #[cfg(test)]
-#[cfg(target_arch = "x86_64")]
+#[cfg(any(target_arch = "x86_64", target_arch = "aarch64"))]
 use getrandom::getrandom;
 use merlin::TranscriptRng;
 use rand::{CryptoRng, RngCore};
@@ -56,7 +56,7 @@ impl RngCore for Trng {
         u64::from_le_bytes(out)
     }
 
-    #[cfg(not(target_arch = "x86_64"))]
+    #[cfg(not(any(target_arch = "x86_64", target_arch = "aarch64")))]
     fn fill_bytes(&mut self, dest: &mut [u8]) {
         c_zemu_log_stack(b"fill_bytes\x00".as_ref());
 
@@ -65,13 +65,13 @@ impl RngCore for Trng {
         }
     }
 
-    #[cfg(target_arch = "x86_64")]
+    #[cfg(any(target_arch = "x86_64", target_arch = "aarch64"))]
     #[cfg(test)]
     fn fill_bytes(&mut self, dest: &mut [u8]) {
         getrandom(dest);
     }
 
-    #[cfg(target_arch = "x86_64")]
+    #[cfg(any(target_arch = "x86_64", target_arch = "aarch64"))]
     #[cfg(not(test))]
     fn fill_bytes(&mut self, _dest: &mut [u8]) {}
 
