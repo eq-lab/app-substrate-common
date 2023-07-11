@@ -4,9 +4,12 @@
 extern "C" {
 #endif
 
+#include <stdbool.h>
 #include "../../parser_txdef.h"
 
-bool _readMethod_Polkadot(parser_tx_t *v);
+
+bool _readMethod_balances(parser_tx_t *v);
+
 
 #ifdef __cplusplus
 }

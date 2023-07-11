@@ -6,7 +6,7 @@ extern "C" {
 
 #include "../../parser_txdef.h"
 
-bool _readMethod_Polkadot(parser_tx_t *v);
+bool _readMethod_BridgeHub_Polkadot(parser_tx_t *v);
 
 #ifdef __cplusplus
 }

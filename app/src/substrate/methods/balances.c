@@ -1,14 +1,4 @@
-#include "common.h"
-
-typedef enum {
-    PalletId_Polkadot_Balances = 5
-} PalletId_Polkadot;
-
-typedef enum {
-    PalletId_Statemint_Assets = 50,
-    PalletId_Statemint_Balances = 10
-} PalletId_Statemint;
-
+#include "balances.h"
 
 typedef enum {
     MethodId_Balances_Transfer = 7,
@@ -17,7 +7,7 @@ typedef enum {
     MethodId_Balances_TransferKeepAlive = 3
 } MethodId_Balances;
 
-bool _read_method_balances(parser_tx_t *v) {
+bool _readMethod_balances(parser_tx_t *v) {
     switch (v->callIndex.idx)
     {
     case MethodId_Balances_Transfer:

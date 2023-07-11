@@ -193,6 +193,24 @@ typedef struct {
     compactInt_t value;
 } pd_CompactBalance_t;
 
+typedef struct {
+    const uint8_t* _ptr;
+} pd_AccountId_t;
+
+typedef struct {
+    compactInt_t value;
+} pd_CompactAccountIndex_t;
+
+typedef struct {
+    uint8_t value;
+    union {
+        pd_AccountId_t id;
+        pd_CompactAccountIndex_t index;
+        pd_Bytes_t raw;
+        const uint8_t* _ptr;
+    };
+} pd_AccountIdLookupOfT_t;
+
 ////////////////////////
 ////////////////////////
 ////////////////////////

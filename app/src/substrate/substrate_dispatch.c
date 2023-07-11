@@ -21,12 +21,12 @@
 #include "zxmacros.h"
 #include <stdint.h>
 
-parser_error_t _readMethod(parser_context_t* c, parser_tx_t *v)
-{
-    return parser_tx_version_not_supported;
-}
+// parser_error_t _readMethod(parser_context_t* c, parser_tx_t *v) // TODO_GRANT
+// {
+//     return parser_tx_version_not_supported;
+// }
 
-uint8_t _getMethod_NumItems(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx)
+uint8_t _getMethod_NumItems(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx) // TODO_GRANT
 {
     return 2;
 }
@@ -36,12 +36,12 @@ const char* _getMethod_ModuleName(uint32_t transactionVersion, uint8_t moduleIdx
     return STR_MO_POLKADOT;
 }
 
-const char* _getMethod_Name(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx)
+const char* _getMethod_Name(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx) // TODO_GRANT
 {
     return STR_ME_SIGN;
 }
 
-const char* _getMethod_ItemName(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx)
+const char* _getMethod_ItemName(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx) // TODO_GRANT
 {
     switch (itemIdx) {
     case 0:
@@ -55,17 +55,17 @@ const char* _getMethod_ItemName(uint32_t transactionVersion, uint8_t moduleIdx, 
 
 parser_error_t _getMethod_ItemValue(uint32_t transactionVersion, pd_Method_t* m, uint8_t moduleIdx, uint8_t callIdx,
     uint8_t itemIdx, char* outValue, uint16_t outValueLen,
-    uint8_t pageIdx, uint8_t* pageCount)
+    uint8_t pageIdx, uint8_t* pageCount) // TODO_GRANT
 {
     return parser_unexpected_error;
 }
 
-bool _getMethod_ItemIsExpert(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx)
+bool _getMethod_ItemIsExpert(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx) // TODO_GRANT
 {
     return false;
 }
 
-bool _getMethod_IsNestingSupported(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx)
+bool _getMethod_IsNestingSupported(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx) // TODO_GRANT is it required??
 {
     return false;
 }

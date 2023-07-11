@@ -1,12 +1,12 @@
-#include "polkadot.h"
+#include "bridgehub_polkadot.h"
 #include "../../methods/balances.h"
 
 typedef enum {
-    PalletId_Balances = 7,
+    PalletId_Balances = 10,
 } PalletId;
 
-bool _readMethod_Polkadot(parser_tx_t *v) {
-    switch (v->callIndex.moduleIdx) {
+bool _readMethod_BridgeHub_Polkadot(parser_tx_t *v) {
+    switch (v->callIndex.idx) {
         case PalletId_Balances:
             return _readMethod_balances(v);
 

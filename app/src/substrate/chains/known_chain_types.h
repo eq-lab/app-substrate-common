@@ -4,11 +4,14 @@
 extern "C" {
 #endif
 
+#include "../methods/types.h"
+#include "equilibrium/types.h"
+
 typedef enum {
     KnownChainType_Polkadot = 0,
     KnownChainType_Kusama,
-    KnownChainType_Statemint,
-    KnownChainType_Statemine,
+    KnownChainType_BridgeHub_Polkadot,
+    KnownChainType_BridgeHub_Kusama,
     KnownChainType_Equilibrium,
     KnownChainType_Genshiro,
     KnownChainType_Acala,

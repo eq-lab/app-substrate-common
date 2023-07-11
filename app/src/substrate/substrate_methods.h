@@ -28,14 +28,20 @@ extern "C" {
 
 #include "substrate_methods_common.h"
 #include "substrate_types_common.h"
+#include "known_chain_types.h"
 
 typedef union {
-    // pd_Method_Common_t common;
-    int ff; // TODO
+    // common methods
+    pd_Method_Balances_t balances;
+    pd_Method_Assets_t assets;
+
+    // unique methods
+    pd_Method_Equilibrium_t equilibrium;
+    // TODO_GRANT: fill with all unique methods
 } pd_Method_t;
 
 typedef union {
-    char remove_me;
+    char remove_me; // TODO_GRANT
     char remove_me2;
 } pd_MethodNested_t;
 

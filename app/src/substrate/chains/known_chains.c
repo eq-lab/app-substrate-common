@@ -1,12 +1,21 @@
 #include "known_chains.h"
 #include "substrate_types_common.h"
+
+#include "methods/assets.h"
+#include "methods/balances.h"
+#include "chains/astar/astar.h"
+#include "chains/bridgehub_polkadot/bridgehub_polkadot.h"
+#include "chains/equilibrium/equilibrium.h"
+#include "chains/kusama/kusama.h"
+#include "chains/polkadot/polkadot.h"
+
 #include "parser_common.h"
 #include <string.h>
 
 const uint8_t GenesisHash_Polkadot[32] = {145, 177, 113, 187, 21, 142, 45, 56, 72, 250, 35, 169, 241, 194, 81, 130, 251, 142, 32, 49, 59, 44, 30, 180, 146, 25, 218, 122, 112, 206, 144, 195};
 const uint8_t GenesisHash_Kusama[32] = {176, 168, 212, 147, 40, 92, 45, 247, 50, 144, 223, 183, 230, 31, 135, 15, 23, 180, 24, 1, 25, 122, 20, 156, 169, 54, 84, 73, 158, 163, 218, 254};
-const uint8_t GenesisHash_Statemint[32] = {104, 213, 111, 21, 248, 93, 49, 54, 151, 14, 193, 105, 70, 4, 11, 193, 117, 38, 84, 233, 6, 20, 127, 126, 67, 233, 213, 57, 215, 195, 222, 47};
-const uint8_t GenesisHash_Statemine[32] = {72, 35, 158, 246, 7, 215, 146, 136, 116, 2, 122, 67, 166, 118, 137, 32, 151, 39, 223, 179, 211, 220, 94, 91, 3, 163, 155, 220, 46, 218, 119, 26};
+const uint8_t GenesisHash_BridgeHub_Polkadot[32] = {104, 213, 111, 21, 248, 93, 49, 54, 151, 14, 193, 105, 70, 4, 11, 193, 117, 38, 84, 233, 6, 20, 127, 126, 67, 233, 213, 57, 215, 195, 222, 47};
+const uint8_t GenesisHash_BridgeHub_Kusama[32] = {72, 35, 158, 246, 7, 215, 146, 136, 116, 2, 122, 67, 166, 118, 137, 32, 151, 39, 223, 179, 211, 220, 94, 91, 3, 163, 155, 220, 46, 218, 119, 26};
 const uint8_t GenesisHash_Equilibrium[32] = {137, 211, 236, 70, 210, 251, 67, 239, 90, 151, 19, 131, 51, 115, 213, 234, 102, 107, 9, 47, 168, 253, 104, 251, 195, 69, 150, 3, 101, 113, 185, 7};
 const uint8_t GenesisHash_Genshiro[32] = {155, 140, 239, 192, 235, 92, 86, 139, 82, 121, 152, 189, 215, 108, 24, 78, 43, 118, 174, 86, 27, 231, 110, 70, 103, 7, 34, 48, 33, 126, 162, 67};
 const uint8_t GenesisHash_Acala[32] = {252, 65, 185, 189, 142, 248, 254, 83, 213, 140, 126, 166, 124, 121, 76, 126, 201, 167, 61, 175, 5, 230, 213, 75, 20, 255, 99, 66, 201, 155, 166, 76};
@@ -28,11 +37,11 @@ bool _readKnownChainType(parser_tx_t *v) {
     } else if(!memcmp(v->genesisHash._ptr, GenesisHash_Kusama, 32)){
         v->knownChainType = KnownChainType_Kusama;
 
-    } else if(!memcmp(v->genesisHash._ptr, GenesisHash_Statemint, 32)){
-        v->knownChainType = KnownChainType_Statemint;
+    } else if(!memcmp(v->genesisHash._ptr, GenesisHash_BridgeHub_Polkadot, 32)){
+        v->knownChainType = KnownChainType_BridgeHub_Polkadot;
 
-    } else if(!memcmp(v->genesisHash._ptr, GenesisHash_Statemine, 32)){
-        v->knownChainType = KnownChainType_Statemine;
+    } else if(!memcmp(v->genesisHash._ptr, GenesisHash_BridgeHub_Kusama, 32)){
+        v->knownChainType = KnownChainType_BridgeHub_Kusama;
 
     } else if(!memcmp(v->genesisHash._ptr, GenesisHash_Equilibrium, 32)){
         v->knownChainType = KnownChainType_Equilibrium;
@@ -84,6 +93,23 @@ bool _readKnownChainType(parser_tx_t *v) {
 bool _readMethod(parser_tx_t *v) {
     switch (v->knownChainType) {
         case KnownChainType_Polkadot:
-            return _read_method_Polkadot(v);
+            return _readMethod_Polkadot(v);
+
+        case KnownChainType_Kusama:
+             return _readMethod_Kusama(v);
+
+        case KnownChainType_BridgeHub_Polkadot:
+             return _readMethod_BridgeHub_Polkadot(v);
+        
+        case KnownChainType_Astar:
+             return _readMethod_Astar(v);
+
+        case KnownChainType_Equilibrium:
+             return _readMethod_Equilibrium(v);
+        
+        // TODO_GRANT: fill all chains
+
+        default:
+            return false;
     }
 }
