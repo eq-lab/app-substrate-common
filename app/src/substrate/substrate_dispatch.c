@@ -21,11 +21,7 @@
 #include "zxmacros.h"
 #include <stdint.h>
 
-parser_error_t _readMethod(
-    parser_context_t* c,
-    uint8_t moduleIdx,
-    uint8_t callIdx,
-    pd_Method_t* method)
+parser_error_t _readMethod(parser_context_t* c, parser_tx_t *v)
 {
     return parser_tx_version_not_supported;
 }

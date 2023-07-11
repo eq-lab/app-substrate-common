@@ -154,7 +154,7 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
         snprintf(outKey, outKeyLen, "%s", STR_IT_tx_hash);
 
         err = _toStringTransactionHash(
-                        &ctx->tx_obj->method.common.txHash,
+                        &ctx->tx_obj->txHash,
                         outVal, outValLen,
                         pageIdx, pageCount);
 

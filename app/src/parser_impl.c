@@ -30,18 +30,20 @@ parser_error_t _readTx(parser_context_t *c, parser_tx_t *v) {
     CHECK_INPUT()
 
     // Reverse parse to retrieve spec before forward parsing
-    CHECK_ERROR(_checkVersions(c))
-    // Now forward parse
-    // CHECK_ERROR(_readCallIndex(c, &v->callIndex))
-    
-    // CHECK_ERROR(_readMethod(c, v->callIndex.moduleIdx, v->callIndex.idx, &v->method))
-    CHECK_ERROR(_readTxHash(c, &v->method))
+    CHECK_ERROR(_checkVersions(c)) // TODO_GRANT: need to remove?
+    CHECK_ERROR(_readTxHash(c, &v->txHash))
     // CHECK_ERROR(_readEra(c, &v->era))
     // CHECK_ERROR(_readCompactIndex(c, &v->nonce))
     // CHECK_ERROR(_readCompactBalance(c, &v->tip))
     // CHECK_ERROR(_readUInt32(c, &v->specVersion))
     // CHECK_ERROR(_readUInt32(c, &v->transactionVersion))
     CHECK_ERROR(_readGenesisHash(c, &v->genesisHash))
+    bool isKnownChain = _readKnownChainType(v);
+    
+    if (isKnownChain) {
+        CHECK_ERROR(_readCallIndex(c, &v->callIndex))
+        parser_error_t err = _readMethod(c, v); // TODO_GRANT
+    }
     // CHECK_ERROR(_readHash(c, &v->blockHash))
 
     if (c->offset < c->bufferLen) {

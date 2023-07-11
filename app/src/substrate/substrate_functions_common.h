@@ -5,10 +5,11 @@ extern "C" {
 #endif
 
 #include "parser_common.h"
+#include "substrate_types_common.h"
 #include <stddef.h>
 #include <stdint.h>
 
-parser_error_t _readTxHash(parser_context_t* c, pd_Method_Common_t* v);
+parser_error_t _readTxHash(parser_context_t* c, pd_TransactionHash_t* v);
 
 parser_error_t _readGenesisHash(parser_context_t* c, pd_Hash_t* v);
 

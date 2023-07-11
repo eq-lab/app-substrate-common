@@ -92,7 +92,7 @@ parser_error_t _readCallImpl(parser_context_t* c, pd_Call_t* v, pd_MethodNested_
     }
 
     // Read and check the contained method on this Call
-    CHECK_ERROR(_readMethod(c, v->callIndex.moduleIdx, v->callIndex.idx, (pd_Method_t*)m))
+    // CHECK_ERROR(_readMethod(c, v->callIndex.moduleIdx, v->callIndex.idx, (pd_Method_t*)m)) // TODO: check it
 
     // The instance of 'v' corresponding to the upper call on the stack (persisted variable)
     // will end up having the pointer to the first Call and to the 'next' one if exists.

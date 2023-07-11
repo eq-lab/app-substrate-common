@@ -22,6 +22,7 @@ extern "C" {
 #include <stdint.h>
 #include <stddef.h>
 #include "substrate_methods.h"
+#include "substrate/chains/known_chain_types.h"
 
 #if defined(TARGET_NANOX) || defined(TARGET_NANOS2)
 #define MAX_CALL_NESTING_SIZE 6
@@ -30,6 +31,13 @@ extern "C" {
 #define MAX_CALL_NESTING_SIZE 2
 #define MAX_CALL_VEC_SIZE 5
 #endif
+
+typedef enum {
+    DecoderState_UnknownChain = 0,
+    DecoderState_UnknownPallet,
+    DecoderState_UnknownMethod,
+    DecoderState_Ok
+} DecoderState;
 
 typedef struct {
     pd_CallIndex_t callIndex;
@@ -41,8 +49,12 @@ typedef struct {
     uint32_t specVersion;
     uint32_t transactionVersion;
 
+    pd_TransactionHash_t txHash;
     pd_Hash_t genesisHash;
     pd_Hash_t blockHash;
+
+    DecoderState decoderState;
+    known_chain_type_t knownChainType;
 
     pd_NestCallIdx_t nestCallIdx;
 } parser_tx_t;

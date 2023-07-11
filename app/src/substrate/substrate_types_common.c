@@ -8,12 +8,11 @@
 #include <zxformat.h>
 #include <zxmacros.h>
 
-parser_error_t _readTxHash(parser_context_t* c, pd_Method_Common_t* v)
+parser_error_t _readTxHash(parser_context_t* c, pd_TransactionHash_t* txHash)
 {
-    CHECK_INPUT();
     cx_blake2b_t ctx;
     cx_blake2b_init(&ctx, 256);
-    cx_hash(&ctx.header, CX_LAST, c->buffer, c->bufferLen, v->txHash, BLAKE2B_DIGEST_SIZE);
+    cx_hash(&ctx.header, CX_LAST, c->buffer, c->bufferLen, txHash, BLAKE2B_DIGEST_SIZE);
 
     c->offset = c->bufferLen;
 

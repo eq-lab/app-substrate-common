@@ -30,7 +30,8 @@ extern "C" {
 #include "substrate_types_common.h"
 
 typedef union {
-    pd_Method_Common_t common;
+    // pd_Method_Common_t common;
+    int ff; // TODO
 } pd_Method_t;
 
 typedef union {
