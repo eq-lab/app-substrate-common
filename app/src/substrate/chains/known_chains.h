@@ -8,8 +8,6 @@ extern "C" {
 
 bool _readKnownChainType(parser_tx_t *v);
 
-bool _readMethod(parser_tx_t *v);
-
 #ifdef __cplusplus
 }
 #endif

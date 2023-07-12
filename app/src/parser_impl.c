@@ -41,6 +41,7 @@ parser_error_t _readTx(parser_context_t *c, parser_tx_t *v) {
     bool isKnownChain = _readKnownChainType(v);
     
     if (isKnownChain) {
+        // TODO_GRANT: is it reuired ti shift buffer counter?
         CHECK_ERROR(_readCallIndex(c, &v->callIndex))
         parser_error_t err = _readMethod(c, v); // TODO_GRANT
     }

@@ -19,15 +19,30 @@
 extern "C" {
 #endif
 
-// Modules names
 static const char* STR_MO_POLKADOT = "Substrate";
+
+
+// Pallet names
+static const char* STR_MO_Assets = "Assets";
+static const char* STR_MO_Balances = "Balances";
+
 
 // Methods names
 static const char* STR_ME_SIGN = "Sign";
+static const char* STR_ME_TRANSFER = "Transfer";
+static const char* STR_ME_TRANSFER_ALL = "Transfer all";
+static const char* STR_ME_TRANSFER_ALLOW_DEATH = "Transfer allow death";
+static const char* STR_ME_TRANSFER_KEEP_LIVE = "Transfer keep live";
 
 // Items names
 static const char* STR_IT_tx_hash = "Tx hash";
 static const char* STR_IT_genesis_hash = "Genesis hash";
+static const char* STR_IT_dest = "Dest";
+static const char* STR_IT_value = "Value";
+static const char* STR_IT_keep_alive = "Keep alive";
+static const char* STR_IT_id = "Id";
+static const char* STR_IT_target = "Target";
+static const char* STR_IT_amount = "Amount";
 
 
 // Chains names
@@ -48,6 +63,7 @@ static const char* STR_CH_Shiden = "Shiden";
 static const char* STR_CH_Mangata = "MangataX";
 static const char* STR_CH_Hydradx = "HydraDX";
 static const char* STR_CH_Basilisk = "Basilisk";
+
 
 #ifdef __cplusplus
 }

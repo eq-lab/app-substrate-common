@@ -21,28 +21,69 @@
 #include "zxmacros.h"
 #include <stdint.h>
 
-// parser_error_t _readMethod(parser_context_t* c, parser_tx_t *v) // TODO_GRANT
-// {
-//     return parser_tx_version_not_supported;
-// }
+parser_error_t _readMethod(parser_context_t *c, parser_tx_t *v) {
+    switch (v->knownChainType) {
+        case KnownChainType_Polkadot:
+            return _readMethod_Polkadot(c, v);
 
-uint8_t _getMethod_NumItems(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx) // TODO_GRANT
+        case KnownChainType_Kusama:
+             return _readMethod_Kusama(c, v);
+
+        case KnownChainType_BridgeHub_Polkadot:
+             return _readMethod_BridgeHub_Polkadot(c, v);
+        
+        case KnownChainType_Astar:
+             return _readMethod_Astar(c, v);
+
+        case KnownChainType_Equilibrium:
+             return _readMethod_Equilibrium(c, v);
+        
+        // TODO_GRANT: fill all chains
+
+        default:
+            return parser_not_supported;
+    }
+}
+
+uint8_t _getMethod_NumItems(known_chain_type_t *knownChainType, uint8_t moduleIdx, uint8_t callIdx) // TODO_GRANT
 {
-    return 2;
+    switch (*knownChainType)
+    {
+        case KnownChainType_Polkadot:
+            return _getMethod_NumItems_Polkadot(moduleIdx, callIdx);
+
+        // TODO_GRANT: fill
+        case KnownChainType_Kusama:
+            //  return _getMethod_NumItems_Kusama(moduleIdx, callIdx);
+
+        case KnownChainType_BridgeHub_Polkadot:
+            //  return _getMethod_NumItems_BridgeHub_Polkadot(moduleIdx, callIdx);
+        
+        case KnownChainType_Astar:
+            //  return _getMethod_NumItems_Astar(moduleIdx, callIdx);
+
+        case KnownChainType_Equilibrium:
+            //  return _getMethod_NumItems_Equilibrium(moduleIdx, callIdx);
+        default:
+            return 2;
+    }
 }
 
 const char* _getMethod_ModuleName(uint32_t transactionVersion, uint8_t moduleIdx)
 {
+    // TODO_GRANT
     return STR_MO_POLKADOT;
 }
 
 const char* _getMethod_Name(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx) // TODO_GRANT
 {
+    // TODO_GRANT
     return STR_ME_SIGN;
 }
 
 const char* _getMethod_ItemName(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx) // TODO_GRANT
 {
+    // TODO_GRANT
     switch (itemIdx) {
     case 0:
         return STR_IT_tx_hash;
@@ -57,15 +98,18 @@ parser_error_t _getMethod_ItemValue(uint32_t transactionVersion, pd_Method_t* m,
     uint8_t itemIdx, char* outValue, uint16_t outValueLen,
     uint8_t pageIdx, uint8_t* pageCount) // TODO_GRANT
 {
+    // TODO_GRANT
     return parser_unexpected_error;
 }
 
 bool _getMethod_ItemIsExpert(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx) // TODO_GRANT
 {
+    // TODO_GRANT
     return false;
 }
 
 bool _getMethod_IsNestingSupported(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx) // TODO_GRANT is it required??
 {
+    // TODO_GRANT is it required?
     return false;
 }

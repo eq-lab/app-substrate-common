@@ -35,8 +35,8 @@ extern "C" {
         }                                          \
     }
 
-// parser_error_t _readMethod(parser_context_t* c, parser_tx_t *v);
-uint8_t _getMethod_NumItems(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx);
+parser_error_t _readMethod(parser_context_t *c, parser_tx_t *v); 
+uint8_t _getMethod_NumItems(known_chain_type_t *knownChainType, uint8_t moduleIdx, uint8_t callIdx);
 const char* _getMethod_ModuleName(uint32_t transactionVersion, uint8_t moduleIdx);
 const char* _getMethod_Name(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx);
 const char* _getMethod_ItemName(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx);

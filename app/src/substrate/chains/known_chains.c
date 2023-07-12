@@ -89,27 +89,3 @@ bool _readKnownChainType(parser_tx_t *v) {
     v->decoderState = DecoderState_Ok;
     return true;
 }
-
-bool _readMethod(parser_tx_t *v) {
-    switch (v->knownChainType) {
-        case KnownChainType_Polkadot:
-            return _readMethod_Polkadot(v);
-
-        case KnownChainType_Kusama:
-             return _readMethod_Kusama(v);
-
-        case KnownChainType_BridgeHub_Polkadot:
-             return _readMethod_BridgeHub_Polkadot(v);
-        
-        case KnownChainType_Astar:
-             return _readMethod_Astar(v);
-
-        case KnownChainType_Equilibrium:
-             return _readMethod_Equilibrium(v);
-        
-        // TODO_GRANT: fill all chains
-
-        default:
-            return false;
-    }
-}

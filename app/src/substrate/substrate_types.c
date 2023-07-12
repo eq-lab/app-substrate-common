@@ -536,74 +536,75 @@ parser_error_t _toStringCall(
     uint8_t* pageCount)
 {
     CLEAN_AND_CHECK()
-    *pageCount = 1;
+    // TODO_GRANT: remove?
+    // *pageCount = 1;
 
-    parser_context_t ctx;
+    // parser_context_t ctx;
 
-    const uint8_t* buffer;
-    if (v->nestCallIdx.isTail) {
-        buffer = v->nestCallIdx._ptr;
-    } else {
-        buffer = v->nestCallIdx._nextPtr;
-    }
+    // const uint8_t* buffer;
+    // if (v->nestCallIdx.isTail) {
+    //     buffer = v->nestCallIdx._ptr;
+    // } else {
+    //     buffer = v->nestCallIdx._nextPtr;
+    // }
 
-    parser_init(&ctx, buffer, v->nestCallIdx._lenBuffer);
-    parser_tx_t _txObj;
+    // parser_init(&ctx, buffer, v->nestCallIdx._lenBuffer);
+    // parser_tx_t _txObj;
 
-    pd_Call_t _call;
-    _call.nestCallIdx.isTail = false;
+    // pd_Call_t _call;
+    // _call.nestCallIdx.isTail = false;
 
-    ctx.tx_obj = &_txObj;
-    _txObj.transactionVersion = *v->_txVerPtr;
+    // ctx.tx_obj = &_txObj;
+    // _txObj.transactionVersion = *v->_txVerPtr;
 
-    ctx.tx_obj->nestCallIdx._ptr = NULL;
-    ctx.tx_obj->nestCallIdx._nextPtr = NULL;
-    ctx.tx_obj->nestCallIdx._lenBuffer = 0;
-    ctx.tx_obj->nestCallIdx.slotIdx = 0;
-    ctx.tx_obj->nestCallIdx.isTail = false;
+    // ctx.tx_obj->nestCallIdx._ptr = NULL;
+    // ctx.tx_obj->nestCallIdx._nextPtr = NULL;
+    // ctx.tx_obj->nestCallIdx._lenBuffer = 0;
+    // ctx.tx_obj->nestCallIdx.slotIdx = 0;
+    // ctx.tx_obj->nestCallIdx.isTail = false;
 
-    // Read the Call, so we get the contained Method
-    parser_error_t err = _readCallImpl(&ctx, &_call, (pd_MethodNested_t*)&_txObj.method);
-    if (err != parser_ok) {
-        return err;
-    }
+    // // Read the Call, so we get the contained Method
+    // parser_error_t err = _readCallImpl(&ctx, &_call, (pd_MethodNested_t*)&_txObj.method);
+    // if (err != parser_ok) {
+    //     return err;
+    // }
 
-    // Get num items of this current Call
-    uint8_t callNumItems = _getMethod_NumItems(*v->_txVerPtr, v->callIndex.moduleIdx, v->callIndex.idx);
+    // // Get num items of this current Call
+    // uint8_t callNumItems = _getMethod_NumItems(*v->_txVerPtr, v->callIndex.moduleIdx, v->callIndex.idx);
 
-    // Count how many pages this call has (including nested ones if they exists)
-    for (uint8_t i = 0; i < callNumItems; i++) {
-        uint8_t itemPages = 0;
-        _getMethod_ItemValue(*v->_txVerPtr, &_txObj.method, _call.callIndex.moduleIdx, _call.callIndex.idx, i,
-            outValue, outValueLen, 0, &itemPages);
-        (*pageCount) += itemPages;
-    }
+    // // Count how many pages this call has (including nested ones if they exists)
+    // for (uint8_t i = 0; i < callNumItems; i++) {
+    //     uint8_t itemPages = 0;
+    //     _getMethod_ItemValue(*v->_txVerPtr, &_txObj.method, _call.callIndex.moduleIdx, _call.callIndex.idx, i,
+    //         outValue, outValueLen, 0, &itemPages);
+    //     (*pageCount) += itemPages;
+    // }
 
-    if (pageIdx == 0) {
-        snprintf(outValue, outValueLen, "%s", _getMethod_Name(*v->_txVerPtr, v->callIndex.moduleIdx, v->callIndex.idx));
-        return parser_ok;
-    }
+    // if (pageIdx == 0) {
+    //     snprintf(outValue, outValueLen, "%s", _getMethod_Name(*v->_txVerPtr, v->callIndex.moduleIdx, v->callIndex.idx));
+    //     return parser_ok;
+    // }
 
-    pageIdx--;
+    // pageIdx--;
 
-    if (pageIdx > *pageCount) {
-        return parser_display_idx_out_of_range;
-    }
+    // if (pageIdx > *pageCount) {
+    //     return parser_display_idx_out_of_range;
+    // }
 
-    for (uint8_t i = 0; i < callNumItems; i++) {
-        uint8_t itemPages = 0;
-        _getMethod_ItemValue(*v->_txVerPtr, &_txObj.method, v->callIndex.moduleIdx, v->callIndex.idx, i,
-            outValue, outValueLen, 0, &itemPages);
+    // for (uint8_t i = 0; i < callNumItems; i++) {
+    //     uint8_t itemPages = 0;
+    //     _getMethod_ItemValue(*v->_txVerPtr, &_txObj.method, v->callIndex.moduleIdx, v->callIndex.idx, i,
+    //         outValue, outValueLen, 0, &itemPages);
 
-        if (pageIdx < itemPages) {
-            uint8_t tmp;
-            _getMethod_ItemValue(*v->_txVerPtr, &_txObj.method, v->callIndex.moduleIdx, v->callIndex.idx, i,
-                outValue, outValueLen, pageIdx, &tmp);
-            return parser_ok;
-        }
+    //     if (pageIdx < itemPages) {
+    //         uint8_t tmp;
+    //         _getMethod_ItemValue(*v->_txVerPtr, &_txObj.method, v->callIndex.moduleIdx, v->callIndex.idx, i,
+    //             outValue, outValueLen, pageIdx, &tmp);
+    //         return parser_ok;
+    //     }
 
-        pageIdx -= itemPages;
-    }
+    //     pageIdx -= itemPages;
+    // }
 
     return parser_display_idx_out_of_range;
 }
