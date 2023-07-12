@@ -8,7 +8,8 @@ extern "C" {
 #include "equilibrium/types.h"
 
 typedef enum {
-    KnownChainType_Polkadot = 0,
+    KnownChainType_Unknown = 0,
+    KnownChainType_Polkadot,
     KnownChainType_Kusama,
     KnownChainType_BridgeHub_Polkadot,
     KnownChainType_BridgeHub_Kusama,
@@ -24,8 +25,7 @@ typedef enum {
     KnownChainType_Shiden,
     KnownChainType_Mangata,
     KnownChainType_Hydradx,
-    KnownChainType_Basilisk,
-    KnownChainType_TotalAmount
+    KnownChainType_Basilisk
 } known_chain_type_t;
 
 #ifdef __cplusplus

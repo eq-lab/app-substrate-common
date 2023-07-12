@@ -11,18 +11,18 @@ bool _readMethod_Polkadot(parser_context_t *c, parser_tx_t *v);
 
 uint8_t _getMethod_NumItems_Polkadot(uint8_t moduleIdx, uint8_t callIdx);
 
+const char* _getMethod_ModuleName_Polkadot(uint8_t moduleIdx);
+
+const char* _getMethod_Name_Polkadot(uint8_t moduleIdx, uint8_t callIdx);
+
+const char* _getMethod_ItemName_Polkadot(uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx);
+
+parser_error_t _getMethod_ItemValue_Polkadot(
+    pd_Method_t* m, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx,
+    char* outValue, uint16_t outValueLen,
+    uint8_t pageIdx, uint8_t* pageCount);
 
 // TODO_GRANT:
-// const char* _getMethod_ModuleName(uint32_t transactionVersion, uint8_t moduleIdx);
-// const char* _getMethod_Name(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx);
-// const char* _getMethod_ItemName(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx);
-
-// parser_error_t _getMethod_ItemValue(
-//     uint32_t transactionVersion,
-//     pd_Method_t* m, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx,
-//     char* outValue, uint16_t outValueLen,
-//     uint8_t pageIdx, uint8_t* pageCount);
-
 // bool _getMethod_ItemIsExpert(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx);
 
 #ifdef __cplusplus

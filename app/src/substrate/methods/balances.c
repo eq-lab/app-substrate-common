@@ -29,6 +29,10 @@ bool _readMethod_balances(parser_context_t *c, parser_tx_t *v) {
     }
 }
 
+
+// Display methods
+
+
 uint8_t _getMethod_NumItems_Balances(uint8_t callIdx) {
     switch (callIdx)
     {
@@ -60,6 +64,8 @@ const char* _getMethod_Name_Balances(uint8_t callIdx) {
     }
 }
 
+
+
 const char* _getMethod_ItemName_Balances_Transfer(uint8_t itemIdx) {
     switch (itemIdx)
     {
@@ -88,15 +94,53 @@ const char* _getMethod_ItemName_Balances(uint8_t callIdx, uint8_t itemIdx) {
     switch (callIdx)
     {
     case MethodId_Balances_Transfer:
-        return _getMethod_ItemName_Balances_Transfer(itemIdx);
-    case MethodId_Balances_TransferAll:
-        return _getMethod_ItemName_Balances_TransferAll(itemIdx);
     case MethodId_Balances_TransferAllowDeath:
-        return _getMethod_ItemName_Balances_Transfer(itemIdx);
     case MethodId_Balances_TransferKeepAlive:
         return _getMethod_ItemName_Balances_Transfer(itemIdx);
+    
+    case MethodId_Balances_TransferAll:
+        return _getMethod_ItemName_Balances_TransferAll(itemIdx);
+    
     default:
         return NULL;
     }
 }
 
+
+
+parser_error_t _getMethod_ItemValue_Balances_Transfer(
+    pd_Method_t* m, uint8_t itemIdx,
+    char* outValue, uint16_t outValueLen,
+    uint8_t pageIdx, uint8_t* pageCount
+) {
+    // TODO_GRANT
+}
+
+parser_error_t _getMethod_ItemValue_Balances_TransferAll(
+    pd_Method_t* m, uint8_t itemIdx,
+    char* outValue, uint16_t outValueLen,
+    uint8_t pageIdx, uint8_t* pageCount
+) {
+    // TODO_GRANT
+}
+
+
+parser_error_t _getMethod_ItemValue_Balances(
+    pd_Method_t* m, uint8_t callIdx, uint8_t itemIdx,
+    char* outValue, uint16_t outValueLen,
+    uint8_t pageIdx, uint8_t* pageCount
+) {
+    switch (callIdx)
+    {
+    case MethodId_Balances_Transfer:
+    case MethodId_Balances_TransferAllowDeath:
+    case MethodId_Balances_TransferKeepAlive:
+        return _getMethod_ItemValue_Balances_Transfer(m, itemIdx, outValue, outValueLen, pageIdx, pageCount);
+    
+    case MethodId_Balances_TransferAll:
+        return _getMethod_ItemValue_Balances_TransferAll(m, itemIdx, outValue, outValueLen, pageIdx, pageCount);
+
+    default:
+        return parser_not_supported;
+    }
+}

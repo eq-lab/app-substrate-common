@@ -19,8 +19,7 @@
 extern "C" {
 #endif
 
-static const char* STR_MO_POLKADOT = "Substrate";
-
+static const char* STR_SUBSTRATE = "Substrate";
 
 // Pallet names
 static const char* STR_MO_Assets = "Assets";

@@ -23,6 +23,9 @@
 
 parser_error_t _readMethod(parser_context_t *c, parser_tx_t *v) {
     switch (v->knownChainType) {
+        case KnownChainType_Unknown:
+            return parser_not_supported;
+        
         case KnownChainType_Polkadot:
             return _readMethod_Polkadot(c, v);
 
@@ -45,10 +48,14 @@ parser_error_t _readMethod(parser_context_t *c, parser_tx_t *v) {
     }
 }
 
-uint8_t _getMethod_NumItems(known_chain_type_t *knownChainType, uint8_t moduleIdx, uint8_t callIdx) // TODO_GRANT
+uint8_t _getMethod_NumItems(known_chain_type_t knownChainType, uint8_t moduleIdx, uint8_t callIdx) // TODO_GRANT
 {
-    switch (*knownChainType)
+    // TODO_GRANT: blind sign
+    switch (knownChainType)
     {
+        case KnownChainType_Unknown:
+            return STR_SUBSTRATE;
+
         case KnownChainType_Polkadot:
             return _getMethod_NumItems_Polkadot(moduleIdx, callIdx);
 
@@ -69,46 +76,86 @@ uint8_t _getMethod_NumItems(known_chain_type_t *knownChainType, uint8_t moduleId
     }
 }
 
-const char* _getMethod_ModuleName(uint32_t transactionVersion, uint8_t moduleIdx)
+const char* _getMethod_ModuleName(known_chain_type_t knownChainType, uint8_t moduleIdx)
 {
-    // TODO_GRANT
-    return STR_MO_POLKADOT;
-}
+    switch (knownChainType)
+    {
+        case KnownChainType_Unknown:
+            return STR_SUBSTRATE;
 
-const char* _getMethod_Name(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx) // TODO_GRANT
-{
-    // TODO_GRANT
-    return STR_ME_SIGN;
-}
+        case KnownChainType_Polkadot:
+            return _getMethod_ModuleName_Polkadot(moduleIdx);
 
-const char* _getMethod_ItemName(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx) // TODO_GRANT
-{
-    // TODO_GRANT
-    switch (itemIdx) {
-    case 0:
-        return STR_IT_tx_hash;
-    case 1:
-        return STR_IT_genesis_hash;
-    default:
-        return NULL;
+        // TODO_GRANT: fill
+        default:
+            return NULL;
     }
 }
 
-parser_error_t _getMethod_ItemValue(uint32_t transactionVersion, pd_Method_t* m, uint8_t moduleIdx, uint8_t callIdx,
-    uint8_t itemIdx, char* outValue, uint16_t outValueLen,
-    uint8_t pageIdx, uint8_t* pageCount) // TODO_GRANT
+const char* _getMethod_Name(known_chain_type_t knownChainType, uint8_t moduleIdx, uint8_t callIdx) // TODO_GRANT
 {
-    // TODO_GRANT
-    return parser_unexpected_error;
+    switch (knownChainType)
+    {
+        case KnownChainType_Unknown:
+            return STR_ME_SIGN;
+
+        case KnownChainType_Polkadot:
+            return _getMethod_Name_Polkadot(moduleIdx, callIdx);
+
+        // TODO_GRANT: fill
+        default:
+            return NULL;
+    }
 }
 
-bool _getMethod_ItemIsExpert(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx) // TODO_GRANT
+const char* _getMethod_ItemName(known_chain_type_t knownChainType, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx)
+{
+    switch (knownChainType)
+    {
+        case KnownChainType_Unknown:
+            switch (itemIdx) {
+                case 0:
+                    return STR_IT_tx_hash;
+                case 1:
+                    return STR_IT_genesis_hash;
+                default:
+                    return NULL;
+                }
+
+        case KnownChainType_Polkadot:
+            return _getMethod_ItemName_Polkadot(moduleIdx, callIdx, itemIdx);
+
+        // TODO_GRANT: fill
+        default:
+            return NULL;
+    }
+}
+
+parser_error_t _getMethod_ItemValue(known_chain_type_t knownChainType, pd_Method_t* m, uint8_t moduleIdx, uint8_t callIdx,
+    uint8_t itemIdx, char* outValue, uint16_t outValueLen,
+    uint8_t pageIdx, uint8_t* pageCount)
+{
+    switch (knownChainType)
+    {
+        case KnownChainType_Unknown:
+            return parser_unexpected_error;
+
+        case KnownChainType_Polkadot:
+            return _getMethod_ItemValue_Polkadot(m, moduleIdx, callIdx, itemIdx, outValue, outValueLen, pageIdx, pageCount);
+
+        // TODO_GRANT: fill
+        default:
+            return parser_unexpected_error;
+    }
+}
+
+bool _getMethod_ItemIsExpert(known_chain_type_t knownChainType, uint8_t moduleIdx, uint8_t callIdx, uint8_t itemIdx) // TODO_GRANT
 {
     // TODO_GRANT
     return false;
 }
 
-bool _getMethod_IsNestingSupported(uint32_t transactionVersion, uint8_t moduleIdx, uint8_t callIdx) // TODO_GRANT is it required??
+bool _getMethod_IsNestingSupported(known_chain_type_t knownChainType, uint8_t moduleIdx, uint8_t callIdx) // TODO_GRANT is it required??
 {
     // TODO_GRANT is it required?
     return false;

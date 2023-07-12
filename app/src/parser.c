@@ -135,7 +135,7 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
 
     parser_error_t err = parser_ok;
     if (displayIdx == FIELD_METHOD) {
-        snprintf(outKey, outKeyLen, "%s", STR_MO_POLKADOT);
+        snprintf(outKey, outKeyLen, "%s", STR_SUBSTRATE);
         snprintf(outVal, outValLen, "%s", STR_ME_SIGN);
         return err;
     }
