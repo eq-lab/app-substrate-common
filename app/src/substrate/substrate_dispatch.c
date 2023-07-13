@@ -32,8 +32,8 @@ parser_error_t _readMethod(parser_context_t *c, parser_tx_t *v) {
         case KnownChainType_Kusama:
              return _readMethod_Kusama(c, v);
 
-        case KnownChainType_BridgeHub_Polkadot:
-             return _readMethod_BridgeHub_Polkadot(c, v);
+        case KnownChainType_AssetHub_Polkadot:
+             return _readMethod_AssetHub_Polkadot(c, v);
         
         case KnownChainType_Astar:
              return _readMethod_Astar(c, v);
@@ -63,8 +63,8 @@ uint8_t _getMethod_NumItems(known_chain_type_t knownChainType, uint8_t moduleIdx
         case KnownChainType_Kusama:
             //  return _getMethod_NumItems_Kusama(moduleIdx, callIdx);
 
-        case KnownChainType_BridgeHub_Polkadot:
-            //  return _getMethod_NumItems_BridgeHub_Polkadot(moduleIdx, callIdx);
+        case KnownChainType_AssetHub_Polkadot:
+            //  return _getMethod_NumItems_AssetHub_Polkadot(moduleIdx, callIdx);
         
         case KnownChainType_Astar:
             //  return _getMethod_NumItems_Astar(moduleIdx, callIdx);

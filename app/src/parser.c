@@ -23,6 +23,7 @@
 #include "substrate_dispatch.h"
 #include "substrate_strings.h"
 #include "substrate_functions_common.h"
+#include "substrate/chains/known_chain_types.h"
 
 #if defined(TARGET_NANOX) || defined(TARGET_NANOS2)
 // For some reason NanoX requires this function
@@ -94,7 +95,7 @@ parser_error_t parser_getNumItems(const parser_context_t *ctx, uint8_t *num_item
                                                  ctx->tx_obj->callIndex.idx);
 
     uint8_t total = FIELD_FIXED_TOTAL_COUNT;
-    if (!parser_show_tip(ctx)) {
+    if (!parser_show_tip(ctx)) { // TODO_GRANT: is it required?
         total -= 1;
     }
     if (!parser_show_expert_fields()) {
@@ -134,40 +135,69 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
     }
 
     parser_error_t err = parser_ok;
+    if (displayIdx == FIELD_NETWORK) {
+        snprintf(outKey, outKeyLen, "%s", STR_IT_network);
+        snprintf(outVal, outValLen, "%s", _getMethod_chainName(ctx->tx_obj->knownChainType));
+        return err;
+    }
+
     if (displayIdx == FIELD_METHOD) {
-        snprintf(outKey, outKeyLen, "%s", STR_SUBSTRATE);
-        snprintf(outVal, outValLen, "%s", STR_ME_SIGN);
+        snprintf(outKey, outKeyLen, "%s", _getMethod_ModuleName(ctx->tx_obj->knownChainType, ctx->tx_obj->callIndex.moduleIdx));
+        snprintf(outVal, outValLen, "%s", _getMethod_Name(ctx->tx_obj->knownChainType,
+                                                          ctx->tx_obj->callIndex.moduleIdx,
+                                                          ctx->tx_obj->callIndex.idx));
         return err;
     }
 
-    // if (!parser_show_expert_fields()) {
-    //     // Search for the next non expert item
-    //     while ((argIdx < methodArgCount) && _getMethod_ItemIsExpert(ctx->tx_obj->transactionVersion,
-    //                                                                 ctx->tx_obj->callIndex.moduleIdx,
-    //                                                                 ctx->tx_obj->callIndex.idx, argIdx)) {
-    //         argIdx++;
-    //         displayIdx++;
-    //     }
+    // VARIABLE ARGUMENTS
+    uint8_t methodArgCount = _getMethod_NumItems(ctx->tx_obj->knownChainType,
+                                                 ctx->tx_obj->callIndex.moduleIdx,
+                                                 ctx->tx_obj->callIndex.idx);
+    // Adjust offset when displayIdx > 0
+    uint8_t argIdx = displayIdx - 2;
+
+    if (!parser_show_expert_fields()) {
+        // Search for the next non expert item
+        while ((argIdx < methodArgCount) && _getMethod_ItemIsExpert(ctx->tx_obj->knownChainType,
+                                                                    ctx->tx_obj->callIndex.moduleIdx,
+                                                                    ctx->tx_obj->callIndex.idx, argIdx)) {
+            argIdx++;
+            displayIdx++;
+        }
+
+        if (argIdx < methodArgCount) {
+        snprintf(outKey, outKeyLen, "%s",
+                 _getMethod_ItemName(ctx->tx_obj->knownChainType,
+                                     ctx->tx_obj->callIndex.moduleIdx,
+                                     ctx->tx_obj->callIndex.idx,
+                                     argIdx));
+
+        return _getMethod_ItemValue(ctx->tx_obj->knownChainType,
+                                   &ctx->tx_obj->method,
+                                   ctx->tx_obj->callIndex.moduleIdx, ctx->tx_obj->callIndex.idx, argIdx,
+                                   outVal, outValLen,
+                                   pageIdx, pageCount);
+    }
+    }
+
+    // if (displayIdx == 1) {
+    //     snprintf(outKey, outKeyLen, "%s", STR_IT_tx_hash);
+
+    //     err = _toStringTransactionHash(
+    //                     &ctx->tx_obj->txHash,
+    //                     outVal, outValLen,
+    //                     pageIdx, pageCount);
+
+    //     return err;
+
+    // } else if (displayIdx == 2) {
+    //     snprintf(outKey, outKeyLen, "%s", STR_IT_genesis_hash);
+
+    //     err = _toStringGenesisHash(
+    //                     &ctx->tx_obj->genesisHash,
+    //                     outVal, outValLen,
+    //                     pageIdx, pageCount);
     // }
-
-    if (displayIdx == 1) {
-        snprintf(outKey, outKeyLen, "%s", STR_IT_tx_hash);
-
-        err = _toStringTransactionHash(
-                        &ctx->tx_obj->txHash,
-                        outVal, outValLen,
-                        pageIdx, pageCount);
-
-        return err;
-
-    } else if (displayIdx == 2) {
-        snprintf(outKey, outKeyLen, "%s", STR_IT_genesis_hash);
-
-        err = _toStringGenesisHash(
-                        &ctx->tx_obj->genesisHash,
-                        outVal, outValLen,
-                        pageIdx, pageCount);
-    }
 
 }
 

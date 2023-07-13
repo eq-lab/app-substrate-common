@@ -250,6 +250,42 @@ parser_error_t _readOptionu32(parser_context_t* c, pd_Optionu32_t* v)
     return parser_ok;
 }
 
+parser_error_t _readAccountId(parser_context_t* c, pd_AccountId_t* v) {
+    GEN_DEF_READARRAY(32)
+}
+
+parser_error_t _readCompactAccountIndex(parser_context_t* c, pd_CompactAccountIndex_t* v)
+{
+    return _readCompactInt(c, &v->value);
+}
+
+parser_error_t _readAccountIdLookupOfT(parser_context_t* c, pd_AccountIdLookupOfT_t* v)
+{
+    CHECK_INPUT()
+    CHECK_ERROR(_readUInt8(c, &v->value))
+    switch (v->value) {
+    case 0: // Id
+        CHECK_ERROR(_readAccountId(c, &v->id))
+        break;
+    case 1: // Index
+        CHECK_ERROR(_readCompactAccountIndex(c, &v->index))
+        break;
+    case 2: // Raw
+        CHECK_ERROR(_readBytes(c, &v->raw))
+        break;
+    case 3: // Address32
+        GEN_DEF_READARRAY(32)
+        break;
+    case 4: // Address20
+        GEN_DEF_READARRAY(20)
+        break;
+    default:
+        return parser_unexpected_value;
+    }
+
+    return parser_ok;
+}
+
 ///////////////////////////////////
 ///////////////////////////////////
 ///////////////////////////////////
@@ -759,6 +795,81 @@ parser_error_t _toStringOptionu32(
     }
     return parser_ok;
 }
+
+parser_error_t _toStringCompactBalance(
+    const pd_CompactBalance_t *v,
+    char *outValue, 
+    uint16_t outValueLen,
+    uint8_t pageIdx, 
+    uint8_t *pageCount)
+{
+    CHECK_ERROR(_toStringCompactInt(
+            &v->value,
+            COIN_AMOUNT_DECIMAL_PLACES, true, "", COIN_TICKER,
+            outValue, outValueLen, pageIdx, pageCount))
+    return parser_ok;
+}
+
+parser_error_t _toStringPubkeyAsAddress(
+    const uint8_t *pubkey,
+    char *outValue, 
+    uint16_t outValueLen,
+    uint8_t pageIdx, 
+    uint8_t *pageCount);
+
+parser_error_t _toStringAccountId(
+    const pd_AccountId_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    return _toStringPubkeyAsAddress(v->_ptr, outValue, outValueLen, pageIdx, pageCount);
+}
+
+parser_error_t _toStringCompactAccountIndex(
+    const pd_CompactAccountIndex_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    return _toStringCompactInt(&v->value, 0, false, "", "", outValue, outValueLen, pageIdx, pageCount);
+}
+
+parser_error_t _toStringAccountIdLookupOfT(
+    const pd_AccountIdLookupOfT_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+    switch (v->value) {
+    case 0: // Id
+        CHECK_ERROR(_toStringAccountId(&v->id, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 1: // Index
+        CHECK_ERROR(_toStringCompactAccountIndex(&v->index, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 2: // Raw
+        CHECK_ERROR(_toStringBytes(&v->raw, outValue, outValueLen, pageIdx, pageCount))
+        break;
+    case 3: // Address32
+    {
+        GEN_DEF_TOSTRING_ARRAY(32)
+    }
+    case 4: // Address20
+    {
+        GEN_DEF_TOSTRING_ARRAY(20)
+    }
+    default:
+        return parser_not_supported;
+    }
+
+    return parser_ok;
+}
+
 
 ///////////////////////////////////
 ///////////////////////////////////

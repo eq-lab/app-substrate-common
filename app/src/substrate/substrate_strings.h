@@ -34,6 +34,7 @@ static const char* STR_ME_TRANSFER_ALLOW_DEATH = "Transfer allow death";
 static const char* STR_ME_TRANSFER_KEEP_LIVE = "Transfer keep live";
 
 // Items names
+static const char* STR_IT_network = "Network";
 static const char* STR_IT_tx_hash = "Tx hash";
 static const char* STR_IT_genesis_hash = "Genesis hash";
 static const char* STR_IT_dest = "Dest";
@@ -47,8 +48,8 @@ static const char* STR_IT_amount = "Amount";
 // Chains names
 static const char* STR_CH_Polkadot = "Polkadot";
 static const char* STR_CH_Kusama = "Kusama";
-static const char* STR_CH_Statemint = "Statemint";
-static const char* STR_CH_Statemine = "Statemine";
+static const char* STR_CH_AssetHub_Polkadot = "AssetHub(DOT)";
+static const char* STR_CH_AssetHub_Kusama = "AssetHub(KSM)";
 static const char* STR_CH_Equilibrium = "Equlibrium";
 static const char* STR_CH_Genshiro = "Genshiro";
 static const char* STR_CH_Acala = "Acala";

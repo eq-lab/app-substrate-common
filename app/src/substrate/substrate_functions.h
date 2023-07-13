@@ -52,6 +52,11 @@ parser_error_t _readOptionu32(parser_context_t* c, pd_Optionu32_t* v);
 parser_error_t _readVecu32(parser_context_t* c, pd_Vecu32_t* v);
 parser_error_t _readVecu8(parser_context_t* c, pd_Vecu8_t* v);
 
+parser_error_t _readAccountId(parser_context_t* c, pd_AccountId_t* v);
+parser_error_t _readCompactAccountIndex(parser_context_t* c, pd_CompactAccountIndex_t* v);
+parser_error_t _readAccountIdLookupOfT(parser_context_t* c, pd_AccountIdLookupOfT_t* v);
+
+
 // Common toString functions
 
 parser_error_t _toStringu8(
@@ -224,6 +229,41 @@ parser_error_t _toStringVecu32(
 
 parser_error_t _toStringVecu8(
     const pd_Vecu8_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringCompactBalance(
+    const pd_CompactBalance_t *v,
+    char *outValue, 
+    uint16_t outValueLen,
+    uint8_t pageIdx, 
+    uint8_t *pageCount);
+
+parser_error_t _toStringPubkeyAsAddress(
+    const uint8_t *pubkey,
+    char *outValue, 
+    uint16_t outValueLen,
+    uint8_t pageIdx, 
+    uint8_t *pageCount);
+
+parser_error_t _toStringAccountId(
+    const pd_AccountId_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringCompactAccountIndex(
+    const pd_CompactAccountIndex_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringAccountIdLookupOfT(
+    const pd_AccountIdLookupOfT_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

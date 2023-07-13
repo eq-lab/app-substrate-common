@@ -9,11 +9,19 @@ typedef enum {
     MethodId_Balances_TransferKeepAlive = 3
 } MethodId_Balances;
 
+
+
+bool _read_balances_transfer(parser_context_t *c, parser_tx_t *v) {
+    CHECK_ERROR(_readAccountIdLookupOfT(c, &v->method.balances.balances_transfer.dest));
+    CHECK_ERROR(_readCompactBalance(c, &v->method.balances.balances_transfer.amount));
+    return parser_ok;
+}
+
 bool _readMethod_balances(parser_context_t *c, parser_tx_t *v) {
     switch (v->callIndex.idx)
     {
     case MethodId_Balances_Transfer:
-        // return _read_balances_transfer(v); TODO_GRANT
+        return _read_balances_transfer(c, v);
     
     case MethodId_Balances_TransferAll:
         // return _read_balances_transferAll(v); TODO_GRANT
@@ -113,7 +121,22 @@ parser_error_t _getMethod_ItemValue_Balances_Transfer(
     char* outValue, uint16_t outValueLen,
     uint8_t pageIdx, uint8_t* pageCount
 ) {
-    // TODO_GRANT
+    switch (itemIdx)
+    {
+    case 0:
+        return _toStringAccountIdLookupOfT(
+                &m->balances.balances_transfer.dest,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+    
+    case 1:
+        return _toStringCompactBalance(
+                &m->balances.balances_transfer.amount,
+                outValue, outValueLen,
+                pageIdx, pageCount); 
+    default:
+        return parser_no_data;
+    }
 }
 
 parser_error_t _getMethod_ItemValue_Balances_TransferAll(
