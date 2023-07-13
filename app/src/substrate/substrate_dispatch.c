@@ -23,9 +23,6 @@
 
 parser_error_t _readMethod(parser_context_t *c, parser_tx_t *v) {
     switch (v->knownChainType) {
-        case KnownChainType_Unknown:
-            return parser_not_supported;
-        
         case KnownChainType_Polkadot:
             return _readMethod_Polkadot(c, v);
 
@@ -43,6 +40,7 @@ parser_error_t _readMethod(parser_context_t *c, parser_tx_t *v) {
         
         // TODO_GRANT: fill all chains
 
+        case KnownChainType_Unknown:
         default:
             return parser_not_supported;
     }
@@ -53,9 +51,6 @@ uint8_t _getMethod_NumItems(known_chain_type_t knownChainType, uint8_t moduleIdx
     // TODO_GRANT: blind sign
     switch (knownChainType)
     {
-        case KnownChainType_Unknown:
-            return STR_SUBSTRATE;
-
         case KnownChainType_Polkadot:
             return _getMethod_NumItems_Polkadot(moduleIdx, callIdx);
 
@@ -71,8 +66,10 @@ uint8_t _getMethod_NumItems(known_chain_type_t knownChainType, uint8_t moduleIdx
 
         case KnownChainType_Equilibrium:
             //  return _getMethod_NumItems_Equilibrium(moduleIdx, callIdx);
+
+        case KnownChainType_Unknown:
         default:
-            return 2;
+            return 0; // Tx hash
     }
 }
 

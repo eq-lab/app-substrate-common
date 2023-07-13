@@ -90,23 +90,38 @@ parser_error_t parser_validate(const parser_context_t *ctx) {
 }
 
 parser_error_t parser_getNumItems(const parser_context_t *ctx, uint8_t *num_items) {
-    uint8_t methodArgCount = _getMethod_NumItems(ctx->tx_obj->knownChainType,
-                                                 ctx->tx_obj->callIndex.moduleIdx,
-                                                 ctx->tx_obj->callIndex.idx);
-
     uint8_t total = FIELD_FIXED_TOTAL_COUNT;
-//    if (!parser_show_tip(ctx)) { // TODO_GRANT: is it required?
-//        total -= 1;
-//    }
-    if (!parser_show_expert_fields()) {
-        total -= EXPERT_FIELDS_TOTAL_COUNT;
+    uint8_t methodArgCount = 0;
 
-        for (uint8_t argIdx = 0; argIdx < methodArgCount; argIdx++) {
-            bool isArgExpert = _getMethod_ItemIsExpert(ctx->tx_obj->knownChainType,
-                                                       ctx->tx_obj->callIndex.moduleIdx,
-                                                       ctx->tx_obj->callIndex.idx, argIdx);
-            if (isArgExpert) {
-                methodArgCount--;
+    if (!ctx->tx_obj->isMethodParsed) {
+        total += 2; // Tx hash
+        
+        if (!ctx->tx_obj->knownChainType == KnownChainType_Unknown) {
+            total += 1; // Unknown chain message
+        }
+
+    } else {       
+        methodArgCount = _getMethod_NumItems(
+            ctx->tx_obj->knownChainType,
+            ctx->tx_obj->callIndex.moduleIdx,
+            ctx->tx_obj->callIndex.idx);
+
+        //    if (!parser_show_tip(ctx)) { // TODO_GRANT: is it required?
+        //        total -= 1;
+        //    }
+
+        if (!parser_show_expert_fields()) {
+            total -= EXPERT_FIELDS_TOTAL_COUNT;
+
+            for (uint8_t argIdx = 0; argIdx < methodArgCount; argIdx++) {
+                bool isArgExpert = _getMethod_ItemIsExpert(
+                    ctx->tx_obj->knownChainType,
+                    ctx->tx_obj->callIndex.moduleIdx,
+                    ctx->tx_obj->callIndex.idx, argIdx);
+
+                if (isArgExpert) {
+                    methodArgCount--;
+                }
             }
         }
     }
@@ -115,11 +130,13 @@ parser_error_t parser_getNumItems(const parser_context_t *ctx, uint8_t *num_item
     return parser_ok;
 }
 
-parser_error_t parser_getItem(const parser_context_t *ctx,
-                              uint8_t displayIdx,
-                              char *outKey, uint16_t outKeyLen,
-                              char *outVal, uint16_t outValLen,
-                              uint8_t pageIdx, uint8_t *pageCount) {
+parser_error_t parser_getItem(
+    const parser_context_t *ctx,
+    uint8_t displayIdx,
+    char *outKey, uint16_t outKeyLen,
+    char *outVal, uint16_t outValLen,
+    uint8_t pageIdx, uint8_t *pageCount
+) {
     MEMZERO(outKey, outKeyLen);
     MEMZERO(outVal, outValLen);
     snprintf(outKey, outKeyLen, "?");
@@ -135,14 +152,49 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
     }
 
     parser_error_t err = parser_ok;
-    if (displayIdx == FIELD_NETWORK) {
+    // if (displayIdx == FIELD_NETWORK) {
+    //     if (ctx->tx_obj->knownChainType != KnownChainType_Unknown) {
+    //         snprintf(outKey, outKeyLen, "%s", STR_IT_network);
+    //         snprintf(outVal, outValLen, "%s", _getMethod_chainName(ctx->tx_obj->knownChainType));
+    //         return err;
+
+    //     } else {
+    //         snprintf(outKey, outKeyLen, "%s", STR_IT_genesis_hash);
+
+    //         return _toStringGenesisHash(
+    //                 &ctx->tx_obj->genesisHash,
+    //                 outVal, outValLen,
+    //                 pageIdx, pageCount);
+    //     }
+    // }
+
+
+    if (ctx->tx_obj->knownChainType == KnownChainType_Unknown) {
+        if (displayIdx == FIELD_NETWORK) {
+            snprintf(outKey, outKeyLen, "%s", "");
+            snprintf(outVal, outValLen, "%s", "Unknown chain!");
+            return err;
+
+        } else if (displayIdx == FIELD_NETWORK + 1) {
+            snprintf(outKey, outKeyLen, "%s", STR_IT_genesis_hash);
+
+            return _toStringGenesisHash(
+                    &ctx->tx_obj->genesisHash,
+                    outVal, outValLen,
+                    pageIdx, pageCount);
+        }
+        displayIdx -= 1;
+
+    } else if (displayIdx == FIELD_NETWORK) {
         snprintf(outKey, outKeyLen, "%s", STR_IT_network);
         snprintf(outVal, outValLen, "%s", _getMethod_chainName(ctx->tx_obj->knownChainType));
         return err;
     }
 
-    if (displayIdx == FIELD_METHOD) {
-        if (ctx->tx_obj->isMethodParsed){
+
+    if (ctx->tx_obj->isMethodParsed){
+        if (displayIdx == FIELD_METHOD) {
+        
             snprintf(outKey, outKeyLen, "%s", _getMethod_ModuleName(
                     ctx->tx_obj->knownChainType,
                     ctx->tx_obj->callIndex.moduleIdx));
@@ -152,68 +204,61 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
                     ctx->tx_obj->callIndex.moduleIdx,
                     ctx->tx_obj->callIndex.idx));
             return err;
-        } else {
+        }
+
+         // VARIABLE ARGUMENTS
+        uint8_t methodArgCount = _getMethod_NumItems(ctx->tx_obj->knownChainType,
+                                                    ctx->tx_obj->callIndex.moduleIdx,
+                                                    ctx->tx_obj->callIndex.idx);
+        // Adjust offset when displayIdx > 0
+        uint8_t argIdx = displayIdx - 2;
+
+        if (!parser_show_expert_fields()) {
+            // Search for the next non expert item
+            while ((argIdx < methodArgCount)
+                && _getMethod_ItemIsExpert(
+                    ctx->tx_obj->knownChainType,
+                    ctx->tx_obj->callIndex.moduleIdx,
+                    ctx->tx_obj->callIndex.idx, argIdx)
+            ) {
+                argIdx++;
+                displayIdx++;
+            }
+
+            if (argIdx < methodArgCount) {
+                snprintf(outKey, outKeyLen, "%s",
+                    _getMethod_ItemName(
+                            ctx->tx_obj->knownChainType,
+                            ctx->tx_obj->callIndex.moduleIdx,
+                            ctx->tx_obj->callIndex.idx,
+                            argIdx));
+
+                return _getMethod_ItemValue(
+                        ctx->tx_obj->knownChainType,
+                    &ctx->tx_obj->method,
+                    ctx->tx_obj->callIndex.moduleIdx, ctx->tx_obj->callIndex.idx, argIdx,
+                    outVal, outValLen,
+                    pageIdx, pageCount);
+            }
+        }
+    } else {
+        if (displayIdx == FIELD_METHOD) {
             snprintf(outKey, outKeyLen, "%s", "Blind");
             snprintf(outVal, outValLen, "%s", "Sign");
+            return err;
+        }
+
+        if (displayIdx == FIELD_METHOD + 1) {
+            snprintf(outKey, outKeyLen, "%s", STR_IT_tx_hash);
+
+            return _toStringTransactionHash(
+                    &ctx->tx_obj->txHash,
+                    outVal, outValLen,
+                    pageIdx, pageCount);
+
+
         }
     }
-    // до сюда доходит
-
-    // VARIABLE ARGUMENTS
-    uint8_t methodArgCount = _getMethod_NumItems(ctx->tx_obj->knownChainType,
-                                                 ctx->tx_obj->callIndex.moduleIdx,
-                                                 ctx->tx_obj->callIndex.idx);
-    // Adjust offset when displayIdx > 0
-    uint8_t argIdx = displayIdx - 2;
-
-    if (!parser_show_expert_fields()) {
-        // Search for the next non expert item
-        while ((argIdx < methodArgCount)
-            && _getMethod_ItemIsExpert(
-                ctx->tx_obj->knownChainType,
-                ctx->tx_obj->callIndex.moduleIdx,
-                ctx->tx_obj->callIndex.idx, argIdx)
-        ) {
-            argIdx++;
-            displayIdx++;
-        }
-
-        if (argIdx < methodArgCount) {
-            snprintf(outKey, outKeyLen, "%s",
-                 _getMethod_ItemName(
-                         ctx->tx_obj->knownChainType,
-                         ctx->tx_obj->callIndex.moduleIdx,
-                         ctx->tx_obj->callIndex.idx,
-                         argIdx));
-
-            return _getMethod_ItemValue(
-                    ctx->tx_obj->knownChainType,
-                   &ctx->tx_obj->method,
-                   ctx->tx_obj->callIndex.moduleIdx, ctx->tx_obj->callIndex.idx, argIdx,
-                   outVal, outValLen,
-                   pageIdx, pageCount);
-        }
-    }
-
-    // if (displayIdx == 1) {
-    //     snprintf(outKey, outKeyLen, "%s", STR_IT_tx_hash);
-
-    //     err = _toStringTransactionHash(
-    //                     &ctx->tx_obj->txHash,
-    //                     outVal, outValLen,
-    //                     pageIdx, pageCount);
-
-    //     return err;
-
-    // } else if (displayIdx == 2) {
-    //     snprintf(outKey, outKeyLen, "%s", STR_IT_genesis_hash);
-
-    //     err = _toStringGenesisHash(
-    //                     &ctx->tx_obj->genesisHash,
-    //                     outVal, outValLen,
-    //                     pageIdx, pageCount);
-    // }
-
 }
 
 
