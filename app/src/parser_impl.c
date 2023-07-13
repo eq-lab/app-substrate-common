@@ -38,27 +38,30 @@ parser_error_t _readTx(parser_context_t *c, parser_tx_t *v) {
     // CHECK_ERROR(_readUInt32(c, &v->specVersion))
     // CHECK_ERROR(_readUInt32(c, &v->transactionVersion))
     CHECK_ERROR(_readGenesisHash(c, &v->genesisHash))
-    bool isKnownChain = _readKnownChainType(v);
-    
-    if (isKnownChain) {
+    _readKnownChainType(v);
+    v->isMethodParsed = false;
+    if (v->knownChainType != KnownChainType_Unknown) {
         // TODO_GRANT: is it reuired ti shift buffer counter?
         CHECK_ERROR(_readCallIndex(c, &v->callIndex))
+
         parser_error_t err = _readMethod(c, v); // TODO_GRANT
+        if (err == parser_ok) {
+            v->isMethodParsed = true;
+        }
     }
     // CHECK_ERROR(_readHash(c, &v->blockHash))
 
-    // return parser_spec_not_supported; // TODO_GRANT: throw here
+    c->offset = c->bufferLen;
+//    if (c->offset < c->bufferLen) {
+//        return parser_unexpected_unparsed_bytes;
+//    }
+//
+//
+//    if (c->offset > c->bufferLen) {
+//        return parser_unexpected_buffer_end;
+//    }
 
-    if (c->offset < c->bufferLen) {
-        return parser_unexpected_unparsed_bytes;
-    }
-    
-    
-    if (c->offset > c->bufferLen) {
-        return parser_unexpected_buffer_end;
-    }
-    
     __address_type = _detectAddressType(c);
-
+    // TODO_GRANT: throw here
     return parser_ok;
 }

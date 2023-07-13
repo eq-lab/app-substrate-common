@@ -84,10 +84,8 @@ bool _readKnownChainType(parser_tx_t *v) {
         v->knownChainType = KnownChainType_Basilisk;
 
     } else {
-        v->decoderState = DecoderState_UnknownChain;
         return false;
     }
-    v->decoderState = DecoderState_Ok;
     return true;
 }
 
@@ -146,7 +144,8 @@ const char* _getMethod_chainName(known_chain_type_t knownChainType) {
     case KnownChainType_Basilisk:
         return STR_CH_Basilisk;
 
+    case KnownChainType_Unknown:
     default:
-        return NULL;
+        return STR_CH_Unknown;
     }
 }

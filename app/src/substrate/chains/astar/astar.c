@@ -8,7 +8,7 @@ typedef enum {
     PalletId_Balances = 31,
 } PalletId;
 
-bool _readMethod_Astar(parser_context_t *c, parser_tx_t *v) {
+parser_error_t _readMethod_Astar(parser_context_t *c, parser_tx_t *v) {
     switch (v->callIndex.moduleIdx) {
         case PalletId_Assets:
             return _readMethod_assets(c, v); 
@@ -18,6 +18,6 @@ bool _readMethod_Astar(parser_context_t *c, parser_tx_t *v) {
             // return _readMethod_balances(v);
 
         default:
-            return false;
+            return parser_unexpected_module;
     }
 }

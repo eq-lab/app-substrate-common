@@ -7,7 +7,7 @@ extern "C" {
 #include "../../parser_txdef.h"
 #include "../../common/parser_common.h"
 
-bool _readMethod_Kusama(parser_context_t *c, parser_tx_t *v);
+parser_error_t _readMethod_Kusama(parser_context_t *c, parser_tx_t *v);
 
 // TODO_GRANT:
 // uint8_t _getMethod_NumItems_(uint8_t moduleIdx, uint8_t callIdx);

@@ -6,12 +6,12 @@ typedef enum {
     PalletId_Balances = 4,
 } PalletId;
 
-bool _readMethod_Kusama(parser_context_t *c, parser_tx_t *v) {
+parser_error_t _readMethod_Kusama(parser_context_t *c, parser_tx_t *v) {
     switch (v->callIndex.moduleIdx) {
         case PalletId_Balances:
             return _readMethod_balances(c, v);
 
         default:
-            return false;
+            return parser_unexpected_callIndex;
     }
 }
