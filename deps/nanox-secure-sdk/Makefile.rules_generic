@@ -76,6 +76,7 @@ LDFLAGS  += -T$(SCRIPT_LD)
 
 bin/app.elf: $(OBJECT_FILES) $(SCRIPT_LD)
 	@echo "[LINK] $@"
+	@sudo ln -s /opt/bolos/gcc-arm-none-eabi-10-2020-q4-major/lib/gcc/arm-none-eabi/10.2.1/libgcc.a /opt/bolos/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/lib/libgcc.a
 	$(L)$(call link_cmdline,$(OBJECT_FILES) $(LDLIBS),$@)
 	$(L)$(GCCPATH)arm-none-eabi-objcopy -O ihex -S bin/app.elf bin/app.hex
 	$(L)cp bin/app.elf obj

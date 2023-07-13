@@ -24,8 +24,8 @@ option(ENABLE_FUZZING "Build with fuzzing instrumentation and build fuzz targets
 option(ENABLE_COVERAGE "Build with source code coverage instrumentation" OFF)
 option(ENABLE_SANITIZERS "Build with ASAN and UBSAN" OFF)
 
-string(APPEND CMAKE_C_FLAGS " -fno-omit-frame-pointer -g")
-string(APPEND CMAKE_CXX_FLAGS " -fno-omit-frame-pointer -g")
+string(APPEND CMAKE_C_FLAGS " -fno-omit-frame-pointer -g -Wno-implicit-function-declaration")
+string(APPEND CMAKE_CXX_FLAGS " -fno-omit-frame-pointer -g -Wno-implicit-function-declaration")
 string(APPEND CMAKE_LINKER_FLAGS " -fno-omit-frame-pointer -g")
 
 add_definitions(-DAPP_STANDARD)
