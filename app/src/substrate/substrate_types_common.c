@@ -13,9 +13,6 @@ parser_error_t _readTxHash(parser_context_t* c, pd_TransactionHash_t* txHash)
     cx_blake2b_t ctx;
     cx_blake2b_init(&ctx, 256);
     cx_hash(&ctx.header, CX_LAST, c->buffer, c->bufferLen, txHash, BLAKE2B_DIGEST_SIZE);
-
-    c->offset = c->bufferLen;
-
     return parser_ok;
 }
 
