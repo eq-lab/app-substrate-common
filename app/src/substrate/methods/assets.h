@@ -8,7 +8,7 @@ extern "C" {
 #include "../../parser_txdef.h"
 #include "../../common/parser_common.h"
 
-bool _readMethod_assets(parser_context_t *c, parser_tx_t *v);
+parser_error_t _readMethod_assets(parser_context_t *c, parser_tx_t *v);
 
 uint8_t _getMethod_NumItems_Assets(uint8_t callIdx);
 

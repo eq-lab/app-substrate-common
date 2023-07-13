@@ -7,7 +7,7 @@ typedef enum {
     MethodId_Assets_TransferKeepAlive = 9
 } MethodId_Assets;
 
-bool _readMethod_assets(parser_context_t *c, parser_tx_t *v) {
+parser_error_t _readMethod_assets(parser_context_t *c, parser_tx_t *v) {
     switch (v->callIndex.idx)
     {
     case MethodId_Assets_Transfer:
@@ -17,7 +17,7 @@ bool _readMethod_assets(parser_context_t *c, parser_tx_t *v) {
         // return _read_assets_transferKeepAlive(v); TODO_GRANT
     
     default:
-        return false;
+        return parser_unexpected_callIndex;
     }
 }
 

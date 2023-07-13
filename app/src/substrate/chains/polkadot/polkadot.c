@@ -3,16 +3,16 @@
 #include "../../parser_impl.h"
 
 typedef enum {
-    PalletId_Balances = 7,
+    PalletId_Balances = 5,
 } PalletId;
 
-bool _readMethod_Polkadot(parser_context_t *c, parser_tx_t *v) {
+parser_error_t _readMethod_Polkadot(parser_context_t *c, parser_tx_t *v) {
     switch (v->callIndex.moduleIdx) {
         case PalletId_Balances:
             return _readMethod_balances(c, v);
 
         default:
-            return false;
+            return parser_unexpected_module;
     }
 }
 

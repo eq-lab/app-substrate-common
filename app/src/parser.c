@@ -34,8 +34,8 @@ void __assert_fail(const char * assertion, const char * file, unsigned int line,
 
 #define FIELD_FIXED_TOTAL_COUNT 7
 
-#define FIELD_METHOD        0
-#define FIELD_NETWORK       1
+#define FIELD_NETWORK       0
+#define FIELD_METHOD        1
 #define FIELD_NONCE         2
 #define FIELD_TIP           3
 #define FIELD_ERA_PHASE     4
@@ -142,12 +142,22 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
     }
 
     if (displayIdx == FIELD_METHOD) {
-        snprintf(outKey, outKeyLen, "%s", _getMethod_ModuleName(ctx->tx_obj->knownChainType, ctx->tx_obj->callIndex.moduleIdx));
-        snprintf(outVal, outValLen, "%s", _getMethod_Name(ctx->tx_obj->knownChainType,
-                                                          ctx->tx_obj->callIndex.moduleIdx,
-                                                          ctx->tx_obj->callIndex.idx));
-        return err;
+        if (ctx->tx_obj->isMethodParsed){
+            snprintf(outKey, outKeyLen, "%s", _getMethod_ModuleName(
+                    ctx->tx_obj->knownChainType,
+                    ctx->tx_obj->callIndex.moduleIdx));
+
+            snprintf(outVal, outValLen, "%s", _getMethod_Name(
+                    ctx->tx_obj->knownChainType,
+                    ctx->tx_obj->callIndex.moduleIdx,
+                    ctx->tx_obj->callIndex.idx));
+            return err;
+        } else {
+            snprintf(outKey, outKeyLen, "%s", "Blind");
+            snprintf(outVal, outValLen, "%s", "Sign");
+        }
     }
+    // до сюда доходит
 
     // VARIABLE ARGUMENTS
     uint8_t methodArgCount = _getMethod_NumItems(ctx->tx_obj->knownChainType,
@@ -158,26 +168,31 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
 
     if (!parser_show_expert_fields()) {
         // Search for the next non expert item
-        while ((argIdx < methodArgCount) && _getMethod_ItemIsExpert(ctx->tx_obj->knownChainType,
-                                                                    ctx->tx_obj->callIndex.moduleIdx,
-                                                                    ctx->tx_obj->callIndex.idx, argIdx)) {
+        while ((argIdx < methodArgCount)
+            && _getMethod_ItemIsExpert(
+                ctx->tx_obj->knownChainType,
+                ctx->tx_obj->callIndex.moduleIdx,
+                ctx->tx_obj->callIndex.idx, argIdx)
+        ) {
             argIdx++;
             displayIdx++;
         }
 
         if (argIdx < methodArgCount) {
-        snprintf(outKey, outKeyLen, "%s",
-                 _getMethod_ItemName(ctx->tx_obj->knownChainType,
-                                     ctx->tx_obj->callIndex.moduleIdx,
-                                     ctx->tx_obj->callIndex.idx,
-                                     argIdx));
+            snprintf(outKey, outKeyLen, "%s",
+                 _getMethod_ItemName(
+                         ctx->tx_obj->knownChainType,
+                         ctx->tx_obj->callIndex.moduleIdx,
+                         ctx->tx_obj->callIndex.idx,
+                         argIdx));
 
-        return _getMethod_ItemValue(ctx->tx_obj->knownChainType,
-                                   &ctx->tx_obj->method,
-                                   ctx->tx_obj->callIndex.moduleIdx, ctx->tx_obj->callIndex.idx, argIdx,
-                                   outVal, outValLen,
-                                   pageIdx, pageCount);
-    }
+            return _getMethod_ItemValue(
+                    ctx->tx_obj->knownChainType,
+                   &ctx->tx_obj->method,
+                   ctx->tx_obj->callIndex.moduleIdx, ctx->tx_obj->callIndex.idx, argIdx,
+                   outVal, outValLen,
+                   pageIdx, pageCount);
+        }
     }
 
     // if (displayIdx == 1) {

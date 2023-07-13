@@ -46,6 +46,7 @@ static const char* STR_IT_amount = "Amount";
 
 
 // Chains names
+static const char* STR_CH_Unknown = "Unknown";
 static const char* STR_CH_Polkadot = "Polkadot";
 static const char* STR_CH_Kusama = "Kusama";
 static const char* STR_CH_AssetHub_Polkadot = "AssetHub(DOT)";

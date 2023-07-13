@@ -32,13 +32,6 @@ extern "C" {
 #define MAX_CALL_VEC_SIZE 5
 #endif
 
-typedef enum {
-    DecoderState_UnknownChain = 0,
-    DecoderState_UnknownPallet,
-    DecoderState_UnknownMethod,
-    DecoderState_Ok
-} DecoderState;
-
 typedef struct {
     pd_CallIndex_t callIndex;
     pd_Method_t method;
@@ -53,8 +46,8 @@ typedef struct {
     pd_Hash_t genesisHash;
     pd_Hash_t blockHash;
 
-    DecoderState decoderState;
     known_chain_type_t knownChainType;
+    bool isMethodParsed;
 
     pd_NestCallIdx_t nestCallIdx;
 } parser_tx_t;

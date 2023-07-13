@@ -80,15 +80,14 @@ const char* _getMethod_ModuleName(known_chain_type_t knownChainType, uint8_t mod
 {
     switch (knownChainType)
     {
-        case KnownChainType_Unknown:
-            return STR_SUBSTRATE;
-
         case KnownChainType_Polkadot:
             return _getMethod_ModuleName_Polkadot(moduleIdx);
 
         // TODO_GRANT: fill
+
+        case KnownChainType_Unknown:
         default:
-            return NULL;
+            return STR_SUBSTRATE;
     }
 }
 
@@ -96,15 +95,13 @@ const char* _getMethod_Name(known_chain_type_t knownChainType, uint8_t moduleIdx
 {
     switch (knownChainType)
     {
-        case KnownChainType_Unknown:
-            return STR_ME_SIGN;
-
         case KnownChainType_Polkadot:
             return _getMethod_Name_Polkadot(moduleIdx, callIdx);
 
         // TODO_GRANT: fill
+        case KnownChainType_Unknown:
         default:
-            return NULL;
+            return STR_ME_SIGN;
     }
 }
 

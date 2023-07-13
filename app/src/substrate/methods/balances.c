@@ -11,13 +11,13 @@ typedef enum {
 
 
 
-bool _read_balances_transfer(parser_context_t *c, parser_tx_t *v) {
+parser_error_t _read_balances_transfer(parser_context_t *c, parser_tx_t *v) {
     CHECK_ERROR(_readAccountIdLookupOfT(c, &v->method.balances.balances_transfer.dest));
     CHECK_ERROR(_readCompactBalance(c, &v->method.balances.balances_transfer.amount));
     return parser_ok;
 }
 
-bool _readMethod_balances(parser_context_t *c, parser_tx_t *v) {
+parser_error_t _readMethod_balances(parser_context_t *c, parser_tx_t *v) {
     switch (v->callIndex.idx)
     {
     case MethodId_Balances_Transfer:
@@ -33,7 +33,7 @@ bool _readMethod_balances(parser_context_t *c, parser_tx_t *v) {
         // return _read_balances_transferKeepAlive(v); TODO_GRANT
     
     default:
-        return false;
+        return parser_unexpected_callIndex;
     }
 }
 
