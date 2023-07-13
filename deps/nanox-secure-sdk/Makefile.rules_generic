@@ -72,6 +72,7 @@ SCRIPT_LD:=$(BOLOS_SDK)/script.ld
 else
 $(info Using custom link script: $(SCRIPT_LD))
 endif
+LDFLAGS += -L/opt/bolos/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/lib/
 LDFLAGS  += -T$(SCRIPT_LD)
 
 bin/app.elf: $(OBJECT_FILES) $(SCRIPT_LD)

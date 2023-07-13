@@ -198,7 +198,7 @@ AFLAGS +=
 LD       := $(GCCPATH)arm-none-eabi-gcc
 LDFLAGS  += -O3 -Os
 LDFLAGS  += -z muldefs
-LDLIBS   += -L/opt/bolos/gcc-arm-none-eabi-10-2020-q4-major/arm-none-eabi/lib/ -lm -lgcc -lc
+LDLIBS   += -lm -lgcc -lc
 LDLIBS   += -Lrust/target/thumbv6m-none-eabi/release -lrslib
 
 ##########################
