@@ -94,9 +94,9 @@ parser_error_t parser_getNumItems(const parser_context_t *ctx, uint8_t *num_item
     uint8_t methodArgCount = 0;
 
     if (!ctx->tx_obj->isMethodParsed) {
-        total += 2; // Tx hash
+        total += 1; // Tx hash
         
-        if (!ctx->tx_obj->knownChainType == KnownChainType_Unknown) {
+        if (ctx->tx_obj->knownChainType == KnownChainType_Unknown) {
             total += 1; // Unknown chain message
         }
 
