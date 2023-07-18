@@ -57,6 +57,7 @@ Khala chain
 ## TODO
 - [x] parse and display chain name / genesis hash
 - [x] blind sign for not parsed method case
+- [x] build on Mac M1
 - [x] `balances::transfer` method for Polkadot chain
 - [ ] other methods for `balances` pallet for Polkadot chain
 - [ ] other chains
