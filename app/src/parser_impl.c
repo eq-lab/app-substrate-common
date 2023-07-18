@@ -32,36 +32,19 @@ parser_error_t _readTx(parser_context_t *c, parser_tx_t *v) {
     // Reverse parse to retrieve spec before forward parsing
     CHECK_ERROR(_checkVersions(c)) // TODO_GRANT: need to remove?
     CHECK_ERROR(_readTxHash(c, &v->txHash))
-    // CHECK_ERROR(_readEra(c, &v->era))
-    // CHECK_ERROR(_readCompactIndex(c, &v->nonce))
-    // CHECK_ERROR(_readCompactBalance(c, &v->tip))
-    // CHECK_ERROR(_readUInt32(c, &v->specVersion))
-    // CHECK_ERROR(_readUInt32(c, &v->transactionVersion))
     CHECK_ERROR(_readGenesisHash(c, &v->genesisHash))
     _readKnownChainType(v);
     v->isMethodParsed = false;
     if (v->knownChainType != KnownChainType_Unknown) {
-        // TODO_GRANT: is it reuired ti shift buffer counter?
         CHECK_ERROR(_readCallIndex(c, &v->callIndex))
 
-        parser_error_t err = _readMethod(c, v); // TODO_GRANT
+        parser_error_t err = _readMethod(c, v);
         if (err == parser_ok) {
             v->isMethodParsed = true;
         }
     }
-    // CHECK_ERROR(_readHash(c, &v->blockHash))
 
     c->offset = c->bufferLen;
-//    if (c->offset < c->bufferLen) {
-//        return parser_unexpected_unparsed_bytes;
-//    }
-//
-//
-//    if (c->offset > c->bufferLen) {
-//        return parser_unexpected_buffer_end;
-//    }
-
     __address_type = _detectAddressType(c);
-    // TODO_GRANT: throw here
     return parser_ok;
 }

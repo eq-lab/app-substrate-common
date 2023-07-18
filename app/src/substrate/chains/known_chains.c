@@ -44,8 +44,8 @@ bool _readKnownChainType(parser_tx_t *v) {
     } else if(!memcmp(v->genesisHash._ptr, GenesisHash_AssetHub_Kusama, 32)){
         v->knownChainType = KnownChainType_AssetHub_Kusama;
 
-    // } else if(!memcmp(v->genesisHash._ptr, GenesisHash_Equilibrium, 32)){
-    //     v->knownChainType = KnownChainType_Equilibrium;
+     } else if(!memcmp(v->genesisHash._ptr, GenesisHash_Equilibrium, 32)){
+         v->knownChainType = KnownChainType_Equilibrium;
 
     } else if(!memcmp(v->genesisHash._ptr, GenesisHash_Genshiro, 32)){
         v->knownChainType = KnownChainType_Genshiro;
@@ -84,6 +84,7 @@ bool _readKnownChainType(parser_tx_t *v) {
         v->knownChainType = KnownChainType_Basilisk;
 
     } else {
+        v->knownChainType = KnownChainType_Unknown;
         return false;
     }
     return true;

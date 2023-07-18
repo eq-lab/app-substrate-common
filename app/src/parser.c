@@ -152,22 +152,6 @@ parser_error_t parser_getItem(
     }
 
     parser_error_t err = parser_ok;
-    // if (displayIdx == FIELD_NETWORK) {
-    //     if (ctx->tx_obj->knownChainType != KnownChainType_Unknown) {
-    //         snprintf(outKey, outKeyLen, "%s", STR_IT_network);
-    //         snprintf(outVal, outValLen, "%s", _getMethod_chainName(ctx->tx_obj->knownChainType));
-    //         return err;
-
-    //     } else {
-    //         snprintf(outKey, outKeyLen, "%s", STR_IT_genesis_hash);
-
-    //         return _toStringGenesisHash(
-    //                 &ctx->tx_obj->genesisHash,
-    //                 outVal, outValLen,
-    //                 pageIdx, pageCount);
-    //     }
-    // }
-
 
     if (ctx->tx_obj->knownChainType == KnownChainType_Unknown) {
         if (displayIdx == FIELD_NETWORK) {
