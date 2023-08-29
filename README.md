@@ -6,6 +6,7 @@ For more information:
 - [forum post](https://forum.polkadot.network/t/unified-ledger-app-for-substrate-based-parachains/2027)
 - [demo](https://github.com/eq-lab/ledger-substrate-app-demo) of using this app to sign transactions on parachains
 - [how to build](docs/build.md)
+- [how to install](docs/install.md)
 
 ## ATTENTION
 
