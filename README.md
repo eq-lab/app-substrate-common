@@ -15,7 +15,7 @@ Please:
 - **Do not use a Ledger device with funds for development purposes.**
 - **Have a separate and marked device that is used ONLY for development and testing**
 
-## Example of using
+## Examples of using
 ### Case 1. Known chain, known method
 Polkadot chain, `Balances` pallet, `Transfer` method
 
