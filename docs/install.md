@@ -3,14 +3,20 @@
 ## Prerequisites
 
 ### MacOS
-1. Install [homebrew](https://brew.sh/)
-2. Install python3 using terminal:
+1. Check python3 version
+```bash
+python3 --version
+```
+
+2. If you see _"zsh: command not found: python3"_ message, install it:
+- Install [homebrew](https://brew.sh/)
+- Install python3 using terminal:
 ```bash 
 brew install python3
 ```
 3. Install ledgerblue package:
 ```bash 
-pip install ledgerblue --user
+pip3 install ledgerblue
 ```
 
 ### Linux
@@ -63,7 +69,7 @@ installer_s.sh load
 You will receive a _"No dongle found"_ error message if any of these conditions are not met:
 - Ledger device is connected to a computer via a USB
 - Ledger device is unlocked
-- A catalog of apps page is opened on Ledger
+- A page of apps catalog is opened on Ledger
 
 ### Confirmation installation on Ledger
 On the Ledger device, you will see these pages:
