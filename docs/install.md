@@ -34,13 +34,35 @@ wget -q -O - https://raw.githubusercontent.com/LedgerHQ/udev-rules/master/add_ud
 pip install ledgerblue --user
 ```
 
-### Windows
-1. Install [Git Bash](https://git-scm.com/downloads)
+### Windows (hardest way)
+1. Install [WSL](https://learn.microsoft.com/en-us/windows/wsl/install)
 2. Install [Python3](https://www.python.org/downloads/windows/)
-3. Install ledgerblue package:
-```bash 
-pip install ledgerblue --user
+3. Open [PowerShell](https://adamtheautomator.com/windows-open-powershell-in-a-folder/) in a folder with _installer_s.sh_ file
+4. Connect to wsl:
+```bash
+wsl
 ```
+
+![](../imgs/install_10.png)
+
+5. Install ledgerblue package:
+```bash 
+pip3 install ledgerblue --user
+```
+6. Connect Ledger to computer via USB and unlock by enter PIN
+7. Open [Powershell as admin](https://adamtheautomator.com/powershell-run-as-administrator/) in new window and get a list of connected device:
+```bash
+usbipd list
+```
+8. Find BUSID of Ledger device (in this case BUSID is __2-4__)
+
+![](../imgs/install_11.png)
+
+9. Attach Ledger to WSL by using BUSID from previous step:
+```bash
+usbipd wsl attach --busid 2-4
+```
+10. Do not disconnect Ledger and stay on apps catalog page before loading Substrate app is finished
 
 ## Load app to Ledger device
 1. Go to [latest release page](https://github.com/eq-lab/app-substrate-common/releases/latest)
@@ -64,7 +86,8 @@ installer_s.sh load
 
 - On Windows:
 ```bash
-installer_s.sh load
+wsl
+sudo ./installer_s.sh load
 ```
 You will receive a _"No dongle found"_ error message if any of these conditions are not met:
 - Ledger device is connected to a computer via a USB
